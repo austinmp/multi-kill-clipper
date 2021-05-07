@@ -1,11 +1,6 @@
 # Multi-Kill Clipper
 >A desktop application built with Electron that allows you to easily create clips of multi-kills earned by you or any other player within your region.
 
-
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
 * Multi-Kill Clipper works by making calls to Riot's API through a running instance of the League of Legends client.
 * Enter the summoner name of any player within your client's region.
 * Select the types of multi-kills you would like Multi-Kill Clipper to detect (first blood, double, triple, quadra, or penta kills).
