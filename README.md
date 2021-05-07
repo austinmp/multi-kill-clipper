@@ -1,5 +1,5 @@
 # Multi-Kill Clipper
->A desktop application built with Electron that allows you to easily create clips of multi-kills earned by you or any other player within your region.
+A desktop application built with Electron that allows you to easily create clips of multi-kills earned by you or any other player within your region.
 
 * Multi-Kill Clipper works by making calls to Riot's API through a running instance of the League of Legends client.
 * Enter the summoner name of any player within your client's region.
@@ -8,7 +8,7 @@
 
 ## Prerequisites
 * You must have the League of Legends client installed on your computer and running while using the app.
-* You must enable the Replay API in the game client config, it is disabled by default. This can be done by following the following steps listed on the [Riot Developer Portal](https://developer.riotgames.com/docs/lol#game-client-api_replay-api)
+* You must enable the Replay API in the game client config, it is disabled by default. This can be done by following the following steps, which are also listed on the [Riot Developer Portal](https://developer.riotgames.com/docs/lol#game-client-api_replay-api)
 
     >       1. Locate where your game is installed. 
     >
