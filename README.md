@@ -1,5 +1,5 @@
 # Multi-Kill Clipper
-A desktop application built for League of Legends players that allows you to easily create clips of multi-kills earned by you or any other player within your region.
+A desktop application that allows League of Legends players to easily create clips of multi-kills earned by you or any other player within your region.
 
 * Multi-Kill Clipper works by making calls to Riot's API through a running instance of the League of Legends client.
 * Enter the summoner name of any player within your client's region.
