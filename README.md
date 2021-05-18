@@ -27,6 +27,7 @@ A desktop application that allows League of Legends players to easily create cli
     >       You will need to restart the replay after changing this value for it to take effect.
     
 ## Download
+[Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/download/v1.0-alpha/multi-kill-clipper.exe)
 ## Demo
 ## Planned Features
 * A queue system for clipping more than one multi-kill at a time.
