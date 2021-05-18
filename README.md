@@ -35,4 +35,4 @@ A desktop application that allows League of Legends players to easily create cli
 If you have any requests of your own, please feel free to submit them. 
 
 ## Misc
-If you found this app helpful or cool and you're feeling generous, feel free to buy me a beer 🍻.
+If you found this app helpful or cool and you're feeling generous, feel free to buy me a coffee ☕.
