@@ -1,0 +1,352 @@
+:root {
+    --sidebarMargins: 15px;
+    --buttonColor: rgba(0,122,204,1);
+    --mainBackgroundColor: rgb(47,49,54);
+}
+
+html, body {
+    margin:0;
+    height:100%;
+    padding: 0;
+}
+
+body {
+    background-color:  rgb(47,49,54);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: 'Montserrat', sans-serif;    
+    color:white;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Archivo Black', sans-serif;
+    margin:0;
+}
+
+/* ================ Side Bar ================ */
+
+aside {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: rgb(54,57,63);
+    height: 100%;
+    width:30%;
+    min-width: 200px;
+    max-width: 250px;
+    min-height: 200px;
+    align-items: center;
+    font-weight: 600;
+    font-size: 12px;
+    
+}
+
+aside header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height:10%;
+    margin-top: 20px;
+    align-self: center;
+}
+
+#summonerNameInput{
+    border-color: #66afe9;
+    outline-style:none;
+    width:90%;
+    background-color: rgb(32,34,37);
+    color:white;
+    font-size: 15px;
+    padding-top: 5px;
+    text-align: center;
+    margin-top: 5px;   
+    align-self: center;
+}   
+
+#form {
+    margin-top: var(--sidebarMargins);
+    margin-bottom: var(--sidebarMargins);
+    display:flex;
+    flex-direction: column; 
+    justify-content: space-evenly;
+    align-items: center;
+    height:40%;
+    min-height: 250px;
+    width:100%;
+}
+
+form input[type=checkbox] {
+    transform: scale(1.0 );
+    background-color: rgb(32,34,37);
+}
+
+#checkboxContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    align-self: flex-start;
+    margin-left: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    /* background-color: khaki; */
+    height:60%;
+}
+
+#summonerName {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    border: none;
+    outline: none;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+  }
+  
+  button {
+    background-color: var(--buttonColor); 
+    color: white;
+    border: 0.5px solid rgb(0, 0, 0);
+  }
+  
+  button:hover:enabled {
+    background-color: rgb(35, 54, 104);
+    color: white;
+  }
+
+#searchGamesButton {
+    align-self: center;
+    /* margin-top: 20px; */
+}
+/* ================  End Side Bar ================ */
+
+
+
+/* ================ Main ================ */
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+    width:100%;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+main header {
+    margin: 20px;
+    font-weight: 600;
+}
+
+section {
+    margin-bottom: 5px;
+}
+
+#about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:80%;
+    overflow-x: hidden;
+}
+
+#collapseAbout{
+    margin-top: 20px;
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+    cursor: pointer;
+    width:300px;
+    
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#collapseButton {    
+    justify-self: flex-start;
+    font-size: 20px;
+    padding:  1px 10px;
+    border: 1px;
+    background-color:rgb(54,57,63);
+}
+
+#collapseAbout header{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#aboutContent {
+    background-color:rgb(54,57,63);
+    width: 100%;
+    height:30%;
+    color:white;
+    min-width: 200px; 
+    min-height: 300px;
+    overflow:auto;
+}
+
+main p {
+    text-align: center;
+}
+
+#aboutContent li {
+    margin-bottom: 9px;
+}
+
+#searchResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    overflow-x: hidden;
+}
+
+table {
+    border-collapse: collapse; /*remove space between borders*/
+    width: 100%;
+    border: 1;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border:none;
+    text-align:center;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: 600;
+}
+
+tbody{
+    font-weight: 400;
+}
+
+th.checkbox{
+    width:5%
+}
+
+th.timestamp{
+    width:10%;
+}
+
+th.championName, th.role, th.multiKillType, th.matchId{
+    width: 15%;
+}
+
+th.matchDate{
+    width:25%;
+}
+
+.roleSelectMenu{
+    background-color: inherit;
+    color: white;
+    outline: none;
+    border:none;
+}
+
+.roleSelectMenu:focus:hover{
+    background-color: var(--mainBackgroundColor);
+}
+
+.hidden {
+    visibility:hidden;
+}
+
+.rowHighlightOn {
+    background-color: var(--buttonColor);
+}
+
+#clipMultiKillButton {
+    width:30%
+}
+
+button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+#buttonWrapper {
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
+
+#cancelButton{
+    background-color: crimson;
+}
+
+/* ================ Loading Spinner ================ */
+
+#loadingWrapper {
+    margin: 20px;
+    display:flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+.displayNone{
+    display:none;
+}
+
+
+
+  
+
+
+
+
+
+

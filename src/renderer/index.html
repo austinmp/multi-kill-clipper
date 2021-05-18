@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <script src="./index.js"></script> -->
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+    <title>Multi-Kill Clipper</title>
+  </head>
+  <body>
+    <aside>
+      <header>
+        <h3> Multi-Kill Clipper</h3>
+      </header>  
+      <form id="form">
+        <label for="summonerName" id="summonerName">Summoner Name
+          <input type="text" name="summonerName" id="summonerNameInput" maxlength="128" required>
+        </label>
+        <div id="checkboxContainer">
+          <label for="firstBloodKill">
+            <input type="checkbox" name="killType" id="firstBloodKill" value="1">First Blood Kills
+          </label>
+          <label for="doubleKills">
+            <input type="checkbox" name="killType" id="doubleKills" value="2">Double Kills
+          </label>
+          <label for="tripleKills">
+            <input type="checkbox" name="killType" id="tripleKills" value="3">Triple Kills
+          </label>
+          <label for="quadraKills">
+            <input type="checkbox" name="killType" id="quadraKills" value="4">Quadra Kills
+          </label>
+          <label for="pentaKills">
+            <input type="checkbox" name="killType" id="pentaKills" value="5">Penta Kills
+          </label>
+        </div>
+          <button type="submit" id="searchGamesButton">Search Games</button>
+      </form>
+    </aside>
+    <main>
+      <section id="about">
+        <div id="collapseAbout">
+          <button type="button" id="collapseButton">-</button>
+          <header>How to Use This App</header>
+        </div>
+        <div id="aboutContent">
+          <ol>
+            <li>Make sure your League of Legends client is open.</li>
+            <li>Enter any summoner name in your region.</li>
+            <li>Select the multi-kill types you wish to view.</li>
+            <li>Multi-Kill Clipper will automatically detect any multi-kills of the selected type, as long as they have occured on the current patch.</li>
+            <li>From the search results, Select the multi-kill you would like to clip and ensure the lane role is correct. The pre-selected role is not 100% accurate, and may wrong if the player is autofilled or they lane swap.</li>
+            <li>Once 'Create Clip' is pressed, Multi-Kill Clipper will download and launch the replay, skip to the time of the kill sequence, and begin recording.</li>
+            <li>Once rendering completes, the clip can be found in your Leage of Legends Highlights folder.</li>
+            <li>You can change the file path your highlights are saved to by navigating to the "In-Game/Replays" tab in the League Client's settings menu.</li>
+          </ol>
+      </section>
+      <secton id="searchResults">
+        <table id="multiKillTable">
+          <colgroup id="columnNames">
+            <col class="checkbox">
+            <col class="championName">
+            <col class="role">
+            <col class="multiKillType">
+            <col class="timestamp">
+            <col class="matchId">
+            <col class="matchDate">
+          </colgroup>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Champion</th>
+              <th>Role</th>
+              <th>Kill Type</th>
+              <th>Timestamp</th>
+              <th>Game Id</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <select id="roleSelectMenuTemplate" name="roleSelectMenu" class="roleSelectMenu displayNone">
+              <option value="TOP">TOP</option>
+              <option value="JUNGLE">JUNGLE</option>
+              <option value="MIDDLE">MIDDLE</option>
+              <option value="BOTTOM">BOTTOM</option>
+              <option value="SUPPORT">SUPPORT</option>
+            </select>
+          </tbody>
+        </table>
+        <div id="loading" class="displayNone">
+          <div id="loadingWrapper">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <p id="statusText">Searching games...</p>
+          </div>
+        </div>
+        <div id="buttonWrapper">
+          <button type="button" id="clipMultiKillButton" class="disabled" disabled>Create Clip</button> 
+          <button type="button" id="cancelButton" >Cancel</button>    
+        </div>
+      </secton>
+    </main>
+  </body>
+</html>
