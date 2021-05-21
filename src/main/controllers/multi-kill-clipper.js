@@ -41,10 +41,28 @@ class Controller {
     async getMatchDataFromClient(summonerName){
         const matchData = {};
         matchData.accountId         = await LeagueClient.getAccountIdBySummonerName(summonerName);
-        matchData.matchHistory      = await LeagueClient.getMatchHistoryByAccountId(matchData.accountId);
         matchData.currentPatch      = await LeagueClient.getPatchVersion();
+        matchData.matchHistory      = await this.getAllMatchesOnCurrentPatch(matchData.accountId, matchData.currentPatch);
         return matchData;
     };
+
+    async getAllMatchesOnCurrentPatch(accountId, currentPatch){
+        let matches = [];
+        let begIndex = 0;
+        let endIndex = 20; // Max of 20 matches are returned per request
+        let currMatches;
+        let patchOfOldestMatch;
+        currentPatch = Match.MultiKillMatch.truncatePatchVersion(currentPatch);
+        do {
+            currMatches = await LeagueClient.getMatchHistoryByAccountId(accountId, begIndex, endIndex);
+            matches = matches.concat(currMatches);
+            let oldestMatch = currMatches[currMatches.length-1];
+            patchOfOldestMatch = Match.MultiKillMatch.truncatePatchVersion(oldestMatch.gameVersion);
+            begIndex += 20;
+            endIndex += 20;
+        } while(patchOfOldestMatch == currentPatch);
+        return matches;3
+    }
 
     async parseMatchDataForMatchesWithMultiKills(matchData, multiKillTypes){
         const multiKillMatches = Match.MultiKillMatch.filterMatchesByMultiKillsAndPatch(matchData.matchHistory, multiKillTypes, matchData.currentPatch);
@@ -96,7 +114,7 @@ class Controller {
         WindowManager.bringWindowToFocus(replay.pid);
         const clip = new ClipMaker.MultiKillClip(replay, MultiKillMatch, indexOfKill, highlightsFolderPath)
         await clip.createClip();
-        // await replay.exit();
+        await replay.exit();
     }
     
     setMultiKillMatches(summonerName, multiKillTypes, matchList ){

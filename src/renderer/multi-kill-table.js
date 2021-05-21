@@ -49,7 +49,7 @@ function getRoleSelectMenu(rowIndex, assumedRole){
 }
 
 function selectAssumedRole(menu, assumedRole){
-    let role = RolesEnum[assumedRole]; 
+    let role = (assumedRole in RolesEnum) ? RolesEnum[assumedRole] : RolesEnum['TOP'];
     menu.options[role].selected = true;
 }
 

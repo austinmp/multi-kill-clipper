@@ -3,7 +3,6 @@ const { makeRequest }       = require('../models/requests.js');
 const LeagueClientConnector = require('../models/league-client-connector.js');
 const EventService          = require('../models/event-service');
 
-
 class LeagueClient  {
 
     constructor(){
@@ -91,8 +90,9 @@ class LeagueClient  {
         return accountId;
     };
 
-    async getMatchHistoryByAccountId(accountId){
-        const matchData = await makeRequest('GET', await this.getUrl(`/lol-match-history/v3/matchlist/account/${accountId}`), await this.getHeaders());
+    // Max is 20 matches per request
+    async getMatchHistoryByAccountId(accountId, begIndex, endIndex){
+        const matchData = await makeRequest('GET', await this.getUrl(`/lol-match-history/v3/matchlist/account/${accountId}?begIndex=${begIndex}&endIndex=${endIndex}`), await this.getHeaders());
         const matchHistory = await matchData.games.games;
         return matchHistory.reverse();
     };

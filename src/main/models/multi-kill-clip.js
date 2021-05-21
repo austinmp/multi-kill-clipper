@@ -29,10 +29,14 @@ class MultiKillClip {
         const startTime = this.kill.start - TIME_TO_CLIP_BEFORE_KILL;
         const endTime = this.kill.end + TIME_TO_CLIP_AFTER_KILL;
         const waitTime = endTime -  startTime;
+        await this.setRecordingProperties(startTime, endTime, false); // make sure we arent recording
+        await this.setPlaybackProperties(startTime, true);
+        await sleepInSeconds(2);
+        await this.setPlaybackProperties(startTime, false);
         await this.setRenderProperties();
-        await this.setPlaybackProperties(startTime);
+        await sleepInSeconds(2);
+        await this.setRecordingProperties(startTime, endTime, true);
         this.lockCamera();
-        await this.setRecordingProperties(startTime, endTime)
         await this.waitForRecordingToFinish(waitTime);
         EventService.publish('clipProgress', `Clip recorded succcessfully...`);
         EventService.publish('renderingComplete', this.filePath);
@@ -45,13 +49,17 @@ class MultiKillClip {
         return await this.replay.postRenderProperties(options);
     }
 
-    async setPlaybackProperties(startTime){
-        const options = {
+    async setPlaybackProperties(startTime, isPaused){
+        let options = {
             'time'      : startTime,
-            'paused'    : false,
-            'speed'     : 1.0
+            'paused'    : isPaused || false,
+            'seeking'   :  false,
+            'speed'     : 1.0,
+            'length'    : 0
         }
-        return await this.replay.postPlaybackProperties(options);
+        console.log(options);
+        let res = await this.replay.postPlaybackProperties(options);
+        console.log(res);
     }
 
     lockCamera(){
@@ -68,11 +76,11 @@ class MultiKillClip {
         Robot.keyTap(`${cameraLockKey}`);
     }
 
-    async setRecordingProperties(startTime, endTime){
+    async setRecordingProperties(startTime, endTime, isRecording){
         const options = {
             'startTime'     : startTime,
             'endTime'       : endTime,
-            'recording'     : true,
+            'recording'     : isRecording,
             'path'          : this.filePath
         }
         return await this.replay.postRecordingProperties(options);

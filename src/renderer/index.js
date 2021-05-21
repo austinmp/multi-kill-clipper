@@ -13,6 +13,7 @@ const MultiKillTable    = require('./multi-kill-table.js');
 
 window.addEventListener('DOMContentLoaded', async function(){
     addEventListenerToSearchGamesButton();
+    addEventListenerToSelectAllCheckbox();
     clickSearchGamesButtonOnEnterKeyPress();
     addEventListenerToClipButton();
     addEventListenerToCancelButton();
@@ -29,10 +30,12 @@ function addEventListenerToSearchGamesButton(){
         } else {
             const summonerName = document.getElementById('summonerNameInput').value;
             const selectedKillTypes = getSelectedKillTypes();
+            collapseAboutSection();
+            clearMultiKillTable();
+            toggleHTMLElementDisplay('loading', 'on');
             try {
-                toggleHTMLElementDisplay('loading', 'on');
                 const multiKillMatches =  await Controller.getMultiKillMatches(summonerName, selectedKillTypes);
-                setupMultiKillTable(multiKillMatches);
+                createMultiKillTable(multiKillMatches);
             } catch(error){
                 console.log(error);
                 showError(error);
@@ -69,11 +72,15 @@ function toggleHTMLElementDisplay(elementId, setting){
     }
 }
 
-function setupMultiKillTable(multiKillMatches){
-    MultiKillTable.clearTable();
-    clipMultiKillButton('disable');
+function createMultiKillTable(multiKillMatches){
+    clearMultiKillTable();
     MultiKillTable.createTable(multiKillMatches);
     clipMultiKillButton('enable');
+}
+
+function clearMultiKillTable(){
+    MultiKillTable.clearTable();
+    clipMultiKillButton('disable');
 }
 
 function clipMultiKillButton(setting){
@@ -98,8 +105,18 @@ function clickSearchGamesButtonOnEnterKeyPress(){
     window.addEventListener("keydown", function(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            console.log("enter press");
             searchGamesButton.click();
+        }
+    });
+}
+
+function addEventListenerToSelectAllCheckbox(){
+    const killTypes = document.getElementsByName('killType');
+    const selectAll = document.getElementById('selectAll');
+    selectAll.addEventListener('click', function(event){
+        const isChecked = selectAll.checked;
+        for(let kill of killTypes){
+            kill.checked = isChecked;
         }
     });
 }
@@ -107,13 +124,14 @@ function clickSearchGamesButtonOnEnterKeyPress(){
 function addEventListenerToClipButton(){
     const clipButton = document.getElementById('clipMultiKillButton');
     clipButton.addEventListener('click', async function(event){
-        event.preventDefault();6
+        event.preventDefault();
         const dataFromSelectedRows = getMatchDataFromSelectedRows();
         if(dataFromSelectedRows.length === 0){
             alert("Please select at least one multi-kill to clip.");
         } else {
             toggleHTMLElementDisplay('loading', 'on');
-            try {
+            collapseAboutSection();
+            try {           
                 await Controller.clipMultiKills(dataFromSelectedRows);
             } catch(error){
                 console.log(error);
@@ -188,6 +206,12 @@ function addEventListenerToCollapseButton(){
             collapseButton.innerHTML = '-';
         }
     });
+}
+
+function collapseAboutSection(){
+    toggleHTMLElementDisplay('aboutContent', 'off');
+    collapseButton.classList.add('collapsed');
+    collapseButton.innerHTML = '+';
 }
 
 

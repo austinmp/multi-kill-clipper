@@ -26,6 +26,12 @@ function secondsToMinutesFormatted(s){
   return formattedTime;
 };
 
+function formatDate(rawDate){
+  let date = rawDate.slice(0,10);
+  let tokens = date.split('-');                     // Original format : 2021-05-23
+  return `${tokens[1]}-${tokens[2]}-${tokens[0]}`;  // Returned format : 05-23-2021
+}
+
 function spliceString(str, startIndex, endChar){
   var splicedString = "";
   for(var i = startIndex; (str[i] != endChar && i < str.length); i++){
@@ -44,6 +50,7 @@ module.exports =  {
   millisToSeconds,
   secondsToMillis,
   secondsToMinutesFormatted,
+  formatDate,
   spliceString,
   isEmpty
 }

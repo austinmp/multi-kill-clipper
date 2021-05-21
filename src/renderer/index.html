@@ -17,9 +17,12 @@
       </header>  
       <form id="form">
         <label for="summonerName" id="summonerName">Summoner Name
-          <input type="text" name="summonerName" id="summonerNameInput" maxlength="128" required>
+          <input type="text" name="summonerName" value="" id="summonerNameInput" maxlength="128" required>
         </label>
         <div id="checkboxContainer">
+          <label for="selectAll">
+            <input type="checkbox" name="killType" id="selectAll" value="1">Select All
+          </label>
           <label for="firstBloodKill">
             <input type="checkbox" name="killType" id="firstBloodKill" value="1">First Blood Kills
           </label>
@@ -50,8 +53,8 @@
             <li>Make sure your League of Legends client is open.</li>
             <li>Enter any summoner name in your region.</li>
             <li>Select the multi-kill types you wish to view.</li>
-            <li>Multi-Kill Clipper will automatically detect any multi-kills of the selected type, as long as they have occured on the current patch.</li>
-            <li>From the search results, Select the multi-kill you would like to clip and ensure the lane role is correct. The pre-selected role is not 100% accurate, and may wrong if the player is autofilled or they lane swap.</li>
+            <li>Multi-Kill Clipper will automatically detect any multi-kills of the selected type, as long as they have occurred on the current patch.</li>
+            <li>From the search results, select the multi-kill you would like to clip and ensure the lane role is correct. The pre-selected role is not 100% accurate, and may wrong if the player is autofilled or they lane swap.</li>
             <li>Once 'Create Clip' is pressed, Multi-Kill Clipper will download and launch the replay, skip to the time of the kill sequence, and begin recording.</li>
             <li>Once rendering completes, the clip can be found in your Leage of Legends Highlights folder.</li>
             <li>You can change the file path your highlights are saved to by navigating to the "In-Game/Replays" tab in the League Client's settings menu.</li>
@@ -81,11 +84,11 @@
           </thead>
           <tbody>
             <select id="roleSelectMenuTemplate" name="roleSelectMenu" class="roleSelectMenu displayNone">
-              <option value="TOP">TOP</option>
-              <option value="JUNGLE">JUNGLE</option>
-              <option value="MIDDLE">MIDDLE</option>
-              <option value="BOTTOM">BOTTOM</option>
-              <option value="SUPPORT">SUPPORT</option>
+              <option value="TOP">Top</option>
+              <option value="JUNGLE">Jungle</option>
+              <option value="MIDDLE">Middle</option>
+              <option value="BOTTOM">Bottom</option>
+              <option value="SUPPORT">Support</option>
             </select>
           </tbody>
         </table>

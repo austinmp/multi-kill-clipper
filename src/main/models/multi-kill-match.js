@@ -1,4 +1,4 @@
-const { millisToSeconds } = require('../utils/utils.js');
+const { millisToSeconds, formatDate } = require('../utils/utils.js');
 const { 
   ChampIdToName,
   MultiKillsSingular,
@@ -19,7 +19,7 @@ class MultiKill {
 class MultiKillMatch{
   constructor(match, multiKillTypes){
     this.matchId = match.gameId,
-    this.matchDate = match.gameCreationDate.slice(0,10);
+    this.matchDate = formatDate(match.gameCreationDate);
     this.summonerName = match.participantIdentities[0].player.summonerName;
     this.summonerId = match.participantIdentities[0].player.summonerId;
     this.accountId = match.participantIdentities[0].player.accountId;
@@ -31,7 +31,7 @@ class MultiKillMatch{
     this.quadraKills = match.participants[0].stats.quadraKills;
     this.pentaKills = match.participants[0].stats.pentaKills;
     this.largestMultiKill = match.participants[0].stats.largestMultiKill;
-    this.userSelectedKillTypes = multiKillTypes;    
+    this.userSelectedKillTypes = multiKillTypes;   
   }
 
   static filterMatchesByMultiKillsAndPatch(matchHistory, multiKillTypes, currentPatch){
@@ -46,7 +46,7 @@ class MultiKillMatch{
   static isMatchOnCurrentPatch(match, rawCurrentPatchData){
     const rawMatchPatchData = match.gameVersion;
     const matchPatch = this.truncatePatchVersion(rawMatchPatchData);
-    const currentPatch = this.truncatePatchVersion(rawCurrentPatchData)
+    const currentPatch = this.truncatePatchVersion(rawCurrentPatchData);
     return (matchPatch == currentPatch);
   };
 
@@ -73,9 +73,6 @@ class MultiKillMatch{
     }  
   };
 
-  static test (){
-    console.log('test');
-  }
   setParticipantRole(matchData, participantId){
     const participantData = matchData.participants[participantId-1];
     const lane = participantData.timeline.lane;
