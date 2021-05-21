@@ -1,3 +1,6 @@
+
+https://user-images.githubusercontent.com/48191538/119200524-15796680-ba5b-11eb-97cd-4f324118075e.mp4
+
 # Multi-Kill Clipper
 A desktop application that allows League of Legends players to easily create clips of multi-kills earned by you or any other player within your region.
 
@@ -29,6 +32,10 @@ A desktop application that allows League of Legends players to easily create cli
 ## Download
 [Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/download/v1.0-alpha/multi-kill-clipper.exe)
 ## Demo
+
+Uploading multi-kill-clipper-demo.mp4…
+
+
 ## Planned Features
 * A queue system for clipping more than one multi-kill at a time.
 * Configurable replay settings (fps, resolution, format, etc.).
