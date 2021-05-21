@@ -1,12 +1,14 @@
 # Multi-Kill Clipper
 A desktop application that allows League of Legends players to easily create clips of multi-kills earned by you or any other player within your region.
 
-![preview](https://user-images.githubusercontent.com/48191538/119201532-16ab9300-ba5d-11eb-8f8e-b8a5790fdc3e.PNG)
-
 * Multi-Kill Clipper works by making calls to Riot's API through a running instance of the League of Legends client.
 * Enter the summoner name of any player within your client's region.
 * Select the types of multi-kills you would like Multi-Kill Clipper to detect (first blood, double, triple, quadra, or penta kills).
 * Multi-Kill Clipper will automatically download, launch, and record the entire kill sequence using the Replay API, saving the video to your League of Legends Highlights folder.
+
+![preview](https://user-images.githubusercontent.com/48191538/119201532-16ab9300-ba5d-11eb-8f8e-b8a5790fdc3e.PNG)
+
+
 
 ## Prerequisites
 * You must have the League of Legends client installed on your computer and running while using the app.
