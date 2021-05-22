@@ -1,1 +1,1 @@
-b4d14ed6-67ba-4881-bb76-62f194a9a8d4
+[riot.txt](https://github.com/austinmp/multi-kill-clipper/files/6527181/riot.txt)
