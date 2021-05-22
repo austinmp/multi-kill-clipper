@@ -1,37 +1,45 @@
-## Welcome to GitHub Pages
+# Multi-Kill Clipper
+A desktop application that allows League of Legends players to easily create clips of multi-kills earned by you or any other player within your region.
 
-You can use the [editor on GitHub](https://github.com/austinmp/multi-kill-clipper/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+* Multi-Kill Clipper works by making calls to Riot's API through a running instance of the League of Legends client.
+* Enter the summoner name of any player within your client's region.
+* Select the types of multi-kills you would like Multi-Kill Clipper to detect (first blood, double, triple, quadra, or penta kills).
+* Multi-Kill Clipper will automatically download, launch, and record the entire kill sequence using the Replay API, saving the video to your League of Legends Highlights folder.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+![preview](https://user-images.githubusercontent.com/48191538/119237842-fb985c00-bb0c-11eb-86bf-ee6167b5189e.PNG)
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Prerequisites
+* You must have the League of Legends client installed on your computer and running while using the app.
+* You must enable the Replay API in the game client config, it is disabled by default. This can be done by following the following steps, which are also listed on the [Riot Developer Portal](https://developer.riotgames.com/docs/lol#game-client-api_replay-api)
 
-```markdown
-Syntax highlighted code block
+    >       1. Locate where your game is installed. 
+    >
+    >           Example file location:
+    >
+    >           C:\Riot Games\League of Legends\Config\game.cfg
+    >
+    >       2. Make sure the following lines are included in your game.cfg file:
+    >
+    >           [General]
+    >
+    >           EnableReplayApi=1
+    >
+    >       If the option is already listed, make sure that the valuse is set to 1.
+    >       If the option is not listed at all just add it to the bottom of the list.
+    >       You will need to restart the replay after changing this value for it to take effect.
+    
+## Download
+[Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/download/v1.0/Multi-Kill-Clipper.exe)
+## Demo
+https://user-images.githubusercontent.com/48191538/119200669-61c4a680-ba5b-11eb-9e10-6a5106f9ec76.mp4
+## Planned Features
+* A queue system for clipping more than one multi-kill at a time.
+* Configurable replay settings (fps, resolution, format, etc.).
+* Built in file browser for viewing clips.
+* Tracking of previously clipped multi-kills to prevent duplicate searches.
 
-# Header 1
-## Header 2
-### Header 3
+If you have any requests of your own, please feel free to submit them. 
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/austinmp/multi-kill-clipper/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+## Misc
+If you found this app helpful or cool and you're feeling generous, feel free to buy me a coffee ☕.
