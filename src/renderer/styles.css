@@ -2,6 +2,7 @@
     --sidebarMargins: 15px;
     --buttonColor: rgba(0,122,204,1);
     --mainBackgroundColor: rgb(47,49,54);
+    --asideBackgroundColor: rgb(54,57,63);
 }
 
 html, body {
@@ -31,25 +32,32 @@ aside {
     display:flex;
     flex-direction: column;
     justify-content: flex-start;
-    background-color: rgb(54,57,63);
+    background-color: var(--asideBackgroundColor);
     height: 100vh;
     width:30%;
     min-width: 200px;
     max-width: 250px;
-    min-height: 200px;
+    min-height: 100%;
     align-items: center;
     font-weight: 600;
     font-size: 12px;
-    
 }
 
 aside header {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
     width: 100%;
-    height:10%;
     margin-top: 20px;
     align-self: center;
+    min-height: 25%;
+    flex-shrink: 1;
+}
+
+#gwenRender{
+    width:auto;
+    height:100px;
 }
 
 #summonerNameInput{
@@ -72,7 +80,7 @@ aside header {
     flex-direction: column; 
     justify-content: space-evenly;
     align-items: center;
-    height:40%;
+    height:50%;
     min-height: 250px;
     width:100%;
 }
@@ -91,7 +99,7 @@ form input[type=checkbox] {
     margin-left: 20px;
     margin-top: 15px;
     margin-bottom: 15px;
-    height:60%;
+    height:50%;
 }
 
 #summonerName {
@@ -131,9 +139,7 @@ button {
 }
 /* ================  End Side Bar ================ */
 
-
-
-/* ================ Main ================ */
+/* ================= Main ======================== */
 
 main {
     display: flex;
@@ -144,6 +150,8 @@ main {
     width:100%;
     font-weight: 400;
     font-size: 12px;
+    background-color: var(--mainBackgroundColor);
+    min-height: 100%;
 }
 
 main header {
@@ -218,6 +226,7 @@ table {
     border-collapse: collapse; /*remove space between borders*/
     width: 100%;
     border: 1;
+    cursor: pointer;
 }
 
 th, td {
@@ -289,6 +298,14 @@ button:disabled {
 
 #cancelButton{
     background-color: crimson;
+}
+
+footer {
+    justify-self: flex-end;
+    margin-top: auto;
+    color: rgb(162, 163, 165);
+    width:80%;
+    font-size: 10px;
 }
 
 /* ================ Loading Spinner ================ */

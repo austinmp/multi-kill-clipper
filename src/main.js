@@ -8,11 +8,11 @@ function createWindow () {
     width: 900,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, '..', 'renderer', 'index.js')
+      preload: path.join(__dirname, 'renderer', 'index.js')
     }
   })
   // win.webContents.openDevTools();
-  win.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
+  win.loadFile(path.join(__dirname, 'renderer', 'index.html'));
 }
 
 function listenForRendererEvents(){

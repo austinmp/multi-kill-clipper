@@ -1,10 +1,16 @@
 const { CustomError } = require('./custom-error.js');
+const Bottleneck      = require("bottleneck/es5");
 const https           = require('https');
 const fetch           = require('node-fetch');
 
+const MAX_REQUESTS_PER_SECOND = 20;
+
+const limiter = new Bottleneck({
+    minTime: 1000/MAX_REQUESTS_PER_SECOND
+  });
 
 async function makeRequest( method, url, headers, body, retries = 3){
-    const response = await fetch(url, new RequestOptions(method, headers, body));
+    const response = await limiter.schedule( () =>fetch(url, new RequestOptions(method, headers, body)));
     if(!response.ok){
         await parseResponseForErrors(response, retries-1);
         console.log(`retrying. retries = ${retries-1}`);
