@@ -37,6 +37,8 @@ https://user-images.githubusercontent.com/48191538/119200669-61c4a680-ba5b-11eb-
 ## Planned Features
 * A queue system for clipping more than one multi-kill at a time.
 * Configurable replay settings (fps, resolution, format, etc.).
+* Built in file browser for viewing clips.
+* Tracking of previously clipped multi-kills to prevent duplicate searches.
 
 If you have any requests of your own, please feel free to submit them. 
 
