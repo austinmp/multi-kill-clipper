@@ -30,7 +30,7 @@ A desktop application that allows League of Legends players to easily create cli
 [Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/download/v1.0/Multi-Kill-Clipper.exe)
 ## Demo
 
-<iframe src="https://user-images.githubusercontent.com/48191538/119200669-61c4a680-ba5b-11eb-9e10-6a5106f9ec76.mp4" title="Multi-Kill Clipper Demo"></iframe>
+<iframe src="https://user-images.githubusercontent.com/48191538/119200669-61c4a680-ba5b-11eb-9e10-6a5106f9ec76.mp4" title="Multi-Kill Clipper Demo" width="80%"></iframe>
 
 ## Planned Features
 * A queue system for clipping more than one multi-kill at a time.
