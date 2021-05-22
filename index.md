@@ -1,4 +1,4 @@
-{::options parse_block_html="true" /}
+::options parse_block_html="true" /
 # Multi-Kill Clipper
 A desktop application that allows League of Legends players to easily create clips of multi-kills earned by you or any other player within your region.
 
