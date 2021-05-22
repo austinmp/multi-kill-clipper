@@ -5,10 +5,7 @@ A desktop application that allows League of Legends players to easily create cli
 * Enter the summoner name of any player within your client's region.
 * Select the types of multi-kills you would like Multi-Kill Clipper to detect (first blood, double, triple, quadra, or penta kills).
 * Multi-Kill Clipper will automatically download, launch, and record the entire kill sequence using the Replay API, saving the video to your League of Legends Highlights folder.
-
 ![preview](https://user-images.githubusercontent.com/48191538/119237842-fb985c00-bb0c-11eb-86bf-ee6167b5189e.PNG)
-
-
 ## Prerequisites
 * You must have the League of Legends client installed on your computer and running while using the app.
 * You must enable the Replay API in the game client config, it is disabled by default. This can be done by following the following steps, which are also listed on the [Riot Developer Portal](https://developer.riotgames.com/docs/lol#game-client-api_replay-api)
@@ -32,11 +29,11 @@ A desktop application that allows League of Legends players to easily create cli
 ## Download
 [Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/download/v1.0/Multi-Kill-Clipper.exe)
 ## Demo
-<!-- blank line -->
+
 <figure class="video_container">
   <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
 </figure>
-<!-- blank line -->  
+
 ## Planned Features
 * A queue system for clipping more than one multi-kill at a time.
 * Configurable replay settings (fps, resolution, format, etc.).
