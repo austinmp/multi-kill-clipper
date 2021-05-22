@@ -1,1 +1,5 @@
+layout: page
+title: "verification"
+permalink: /riot.txt/
+
 b4d14ed6-67ba-4881-bb76-62f194a9a8d4
