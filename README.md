@@ -19,7 +19,7 @@ A desktop application that allows League of Legends players to easily create cli
     >
     >           C:\Riot Games\League of Legends\Config\game.cfg
     >
-    >       2. Add the following lines to the game.cfg file:
+    >       2. Make sure the following lines are included in your game.cfg file:
     >
     >           [General]
     >
