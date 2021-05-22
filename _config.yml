@@ -1,1 +1,5 @@
 theme: jekyll-theme-cayman
+
+layout: page
+title: "verification"
+permalink: /riot.txt/
