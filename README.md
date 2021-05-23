@@ -6,6 +6,8 @@ A desktop application that allows League of Legends players to easily create cli
 * Select the types of multi-kills you would like Multi-Kill Clipper to detect (first blood, double, triple, quadra, or penta kills).
 * Multi-Kill Clipper will automatically download, launch, and record the entire kill sequence using the Replay API, saving the video to your League of Legends Highlights folder.
 
+![previewImage](https://user-images.githubusercontent.com/48191538/119243711-5e9ee880-bb37-11eb-9814-242a52a8ca9e.JPG)
+
 ## Prerequisites
 * You must have the League of Legends client installed on your computer and running while using the app.
 * You must enable the Replay API in the game client config, it is disabled by default. This can be done by following the following steps, which are also listed on the [Riot Developer Portal](https://developer.riotgames.com/docs/lol#game-client-api_replay-api)
@@ -16,7 +18,7 @@ A desktop application that allows League of Legends players to easily create cli
     >
     >           C:\Riot Games\League of Legends\Config\game.cfg
     >
-    >       2. Add the following lines to the game.cfg file:
+    >       2. Make sure the following lines are included in your game.cfg file:
     >
     >           [General]
     >
@@ -27,11 +29,14 @@ A desktop application that allows League of Legends players to easily create cli
     >       You will need to restart the replay after changing this value for it to take effect.
     
 ## Download
-[Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/download/v1.0-alpha/multi-kill-clipper.exe)
+[Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/download/v1.0/Multi-Kill-Clipper.exe)
 ## Demo
+https://user-images.githubusercontent.com/48191538/119200669-61c4a680-ba5b-11eb-9e10-6a5106f9ec76.mp4
 ## Planned Features
 * A queue system for clipping more than one multi-kill at a time.
 * Configurable replay settings (fps, resolution, format, etc.).
+* Built in file browser for viewing clips.
+* Tracking of previously clipped multi-kills to prevent duplicate searches.
 
 If you have any requests of your own, please feel free to submit them. 
 
