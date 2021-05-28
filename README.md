@@ -1,6 +1,6 @@
 <p align="center">
-  <img align="center" src="https://user-images.githubusercontent.com/48191538/120049047-ce551d80-bfe6-11eb-9795-6e2722aa0e7a.png" height="64">
-  <h3 align="center">Multi-Kill Clipper</h3>
+  <img align="center" src="https://user-images.githubusercontent.com/48191538/120049047-ce551d80-bfe6-11eb-9795-6e2722aa0e7a.png" height="120">
+  <h1 align="center">Multi-Kill Clipper</h1>
 </p>
 
 
