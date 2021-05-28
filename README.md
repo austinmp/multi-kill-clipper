@@ -1,5 +1,5 @@
 # Multi-Kill Clipper
-![Gwen-Render](https://user-images.githubusercontent.com/48191538/120049047-ce551d80-bfe6-11eb-9795-6e2722aa0e7a.png)
+<img src="https://user-images.githubusercontent.com/48191538/120049047-ce551d80-bfe6-11eb-9795-6e2722aa0e7a.png" alt="gwen_render" width="200"/>
 
 A desktop application that allows League of Legends players to easily create clips of multi-kills earned by themselves or any other player within their region.
 
