@@ -1,7 +1,7 @@
 <p align="center">
   <img align="center" src="https://user-images.githubusercontent.com/48191538/120049047-ce551d80-bfe6-11eb-9795-6e2722aa0e7a.png" height="120">
   <h3 align="center">Multi-Kill Clipper</h3>
-  <p align="center" width="50%">A companion desktop app for League of Legends players </p>
+  <p align="center" width="50%">A desktop app for League of Legends players built on Electron. </p>
 </p>
 
 ## About
