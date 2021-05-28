@@ -1,6 +1,6 @@
 <p align="center">
   <img align="center" src="https://user-images.githubusercontent.com/48191538/120049047-ce551d80-bfe6-11eb-9795-6e2722aa0e7a.png" height="200">
-  <h1 align="center">Multi-Kill Clipper</h1>
+  <p align="center">Multi-Kill Clipper</p>
   <p align="center">An app that allows League of Legends players to easily create clips of multi-kills earned by themselves or any      other player within their region. <p>
 </p>
 
