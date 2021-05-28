@@ -4,6 +4,7 @@
   <p align="center">An app that allows League of Legends players to easily create clips of multi-kills earned by themselves or any      other player within their region. </p>
 </p>
 ___
+
 * Multi-Kill Clipper works by making calls to Riot's API through a running instance of the League of Legends client.
 * Enter the summoner name of any player within your client's region.
 * Select the types of multi-kills you would like Multi-Kill Clipper to detect (first blood, double, triple, quadra, or penta kills).
