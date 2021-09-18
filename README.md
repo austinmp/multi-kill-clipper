@@ -47,6 +47,3 @@ https://user-images.githubusercontent.com/48191538/119200669-61c4a680-ba5b-11eb-
 * Tracking of previously clipped multi-kills to prevent duplicate searches.
 
 If you have any requests of your own, please feel free to submit them. 
-
-## Misc
-If you found this app helpful or cool and you're feeling generous, feel free to buy me a coffee ☕.
