@@ -128,39 +128,3 @@ class MultiKillMatch{
 }
 
 module.exports = { MultiKillMatch };
-
-
-// import {millisToSeconds} from './Utilities/UtilityFunctions.js';
-// import {ChampIdToName} from './Utilities/Constants.js';
-// export {MultiKillMatch};
-
-
-
-// getMultiKillTimesFromAllKills(kills){
-//   let killStreak = 1;
-//   let endTime;
-//   let startTime = kills[0].timestamp;
-//   let killTimes = {}; 
-
-//   if(this.gotFirstBlood) killTimes[killStreak] = [new Time(startTime, startTime)];    
-
-//   for(let i = 0; i < kills.length; i++){
-//       let currKillTime = kills[i].timestamp;
-//       let nextKillTime = (i + 1 < kills.length) ? kills[i+1].timestamp : Number.MAX_VALUE;
-//       if( (nextKillTime <= currKillTime + MULTIKILL_TIMER) || (killStreak === 4 && nextKillTime <= currKillTime + PENTAKILL_TIMER) ){
-//           killStreak++;
-//           endTime = nextKillTime;
-//       } else {
-//           if (killStreak >= 2){   // Never add any 'single' kill except for first blood
-//               if(killTimes.hasOwnProperty(`${killStreak}`)){
-//                   killTimes[killStreak].push(new Time(startTime, endTime));
-//               } else {
-//                   killTimes[killStreak] = [new Time(startTime, endTime)];     
-//               }                    
-//           }
-//           startTime = nextKillTime;
-//           killStreak = 1;
-//       }
-//   }
-//   return killTimes;
-// };

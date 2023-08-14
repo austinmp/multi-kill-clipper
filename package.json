@@ -17,6 +17,7 @@
     "electron-reload": "^1.5.0",
     "electron-squirrel-startup": "^1.0.0",
     "find-process": "^1.4.4",
+    "league-connect": "*",
     "node-fetch": "^2.6.1",
     "node-window-manager": "^2.2.4",
     "robotjs": "^0.6.0"

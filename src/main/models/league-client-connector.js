@@ -60,8 +60,3 @@ class LeagueClientConnector {
 }
 
 module.exports = new LeagueClientConnector();
-
-// const lcc = new LeagueClientConnector();
-// lcc.getClientCredentials().then(res => console.log(res)).catch(err=>console.log(err));
-
-

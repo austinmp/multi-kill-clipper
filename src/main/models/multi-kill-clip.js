@@ -57,9 +57,7 @@ class MultiKillClip {
             'speed'     : 1.0,
             'length'    : 0
         }
-        console.log(options);
         let res = await this.replay.postPlaybackProperties(options);
-        console.log(res);
     }
 
     lockCamera(){
@@ -100,16 +98,3 @@ class MultiKillClip {
 }
 
 module.exports = { MultiKillClip };
-
-
-
-
-// import Robot from 'robotjs';
-// import ReplayRequests from './ReplayRequests';
-// import {sleepInSeconds} from './Utilities/UtilityFunctions.js';
-// import {
-//     ChampIdToName,  
-//     BlueSideCameraControlsByRole, 
-//     RedSideCameraControlsByRole, 
-//     MultiKillsSingular
-// } from './Utilities/Constants.js';
