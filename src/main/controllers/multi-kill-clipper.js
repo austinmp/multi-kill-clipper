@@ -18,7 +18,7 @@ class Controller {
     async getMultiKillMatches(summonerName, multiKillTypes){
         if(this.isSameSummonerName(summonerName) && this.isSameMultiKillTypes(multiKillTypes) && this.multiKillMatches.length > 0 ){
             return this.multiKillMatches;
-        }
+        }        
         const matchData = await this.getMatchDataFromClient(summonerName);
         const multiKillMatches = await this.parseMatchDataForMatchesWithMultiKills(matchData,  multiKillTypes);
         const multiKillMatchObjects = await this.initializeMultiKillMatchObjects(multiKillMatches, multiKillTypes);
@@ -62,6 +62,8 @@ class Controller {
             endIndex += 20;
         } while(patchOfOldestMatch == currentPatch);
         return matches;
+
+        // To Do: verify this function works properly
     }
 
     async parseMatchDataForMatchesWithMultiKills(matchData, multiKillTypes){

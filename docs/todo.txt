@@ -1,0 +1,12 @@
+Front end:
+* Show status when not connnected/ connected to client (red dot/greendot)
+* Show players in game, allow users to select which person to spectate
+* Group kills in the same match 
+  Example:
+    * Match Id 123
+	  - Triple Kill
+	  - Double Kill
+	  - Quadra Kill
+
+Backend:
+* Need to make sure im only getting ranked match data, not regular matches

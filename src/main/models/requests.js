@@ -15,7 +15,7 @@ async function makeRequest( method, url, body = {}, retries = 3){
     const response = await createHttp1Request({
         method: method,
         url: url,
-        body: body,
+        body: body
     }, credentials)
     
     if(!response.ok){
@@ -40,23 +40,23 @@ async function parseResponseForErrors(response, retries){
     }
 }
 
-class RequestOptions{
-    constructor(method, headers, body){
-        this.method = method, // GET or POST
-        this.headers = this.setHeaders(headers);
-        this.agent = new https.Agent({rejectUnauthorized: false});
-        this.body = (method.toLowerCase() == 'get') ? undefined : JSON.stringify(body);
-    }
+// class RequestOptions{
+//     constructor(method, headers, body){
+//         this.method = method, // GET or POST
+//         this.headers = this.setHeaders(headers);
+//         this.agent = new https.Agent({rejectUnauthorized: false});
+//         this.body = (method.toLowerCase() == 'get') ? undefined : JSON.stringify(body);
+//     }
 
-    setHeaders(headers){
-        let myHeaders = new fetch.Headers();
-        myHeaders.append('Content-Type', 'application/json');
-        for(let key in headers){
-            myHeaders.append(key, headers[key]);
-        }
-        return myHeaders;
-    }
-}
+//     setHeaders(headers){
+//         let myHeaders = new fetch.Headers();
+//         myHeaders.append('Content-Type', 'application/json');
+//         for(let key in headers){
+//             myHeaders.append(key, headers[key]);
+//         }
+//         return myHeaders;
+//     }
+// }
 
 module.exports = { makeRequest };
 

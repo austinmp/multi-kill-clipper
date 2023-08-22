@@ -28,19 +28,24 @@ function addEventListenerToSearchGamesButton(){
         if(!isValidForm()){
             alert("Please select at least one kill type.");
         } else {
-            const summonerName = document.getElementById('summonerNameInput').value;
-            const selectedKillTypes = getSelectedKillTypes();
-            collapseAboutSection();
-            clearMultiKillTable();
-            toggleHTMLElementDisplay('loading', 'on');
-            try {
-                const multiKillMatches =  await Controller.getMultiKillMatches(summonerName, selectedKillTypes);
-                createMultiKillTable(multiKillMatches);
-            } catch(error){
-                console.log(error);
-                showError(error);
-            } finally {
-                toggleHTMLElementDisplay('loading', 'off');
+            let summonerName = document.getElementById('summonerNameInput').value.trim();
+            if (summonerName) {
+                const cleanedSummonerName = summonerName.replace(/ /g, "%20"); // replaces spaces in name
+                const selectedKillTypes = getSelectedKillTypes();
+                collapseAboutSection();
+                clearMultiKillTable();
+                toggleHTMLElementDisplay('loading', 'on');
+                try {
+                    const multiKillMatches =  await Controller.getMultiKillMatches(cleanedSummonerName, selectedKillTypes);
+                    createMultiKillTable(multiKillMatches);
+                } catch(error){
+                    console.log(error);
+                    showError(error);
+                } finally {
+                    toggleHTMLElementDisplay('loading', 'off');
+                }
+            } else {
+                showError(new CustomError("Please enter a valid summoner name."));
             }
         }
     })
@@ -215,11 +220,5 @@ function collapseAboutSection(){
 }
 
 
-
-
-
-// import Controller from './../Controller.js';
-// import EventService from ('./../EventService');
-// import from './../Utilities/UtilityFunctions';
 
 

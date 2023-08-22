@@ -18,7 +18,7 @@ class LeagueClient  {
     }
 
     async patchGameSettings(settingsResource){
-        return await makeRequest('PATCH', '/lol-game-settings/v1/game-settings', body=settingsResource);
+        return await makeRequest('PATCH', '/lol-game-settings/v1/game-settings', settingsResource);
     }
 
     async saveGameSettings(){
