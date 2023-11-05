@@ -89,11 +89,10 @@ class LeagueClient  {
         return puuid;
     };
 
-    // Max is 20 matches per request
     async getMatchHistoryByPuuid(puuid, begIndex, endIndex){
         const matchData = await makeRequest('GET', `/lol-match-history/v1/products/lol/${puuid}/matches?begIndex=${begIndex}&endIndex=${endIndex}`);
         const matchHistory = await matchData.games.games;
-        return matchHistory.reverse();
+        return matchHistory;
     };
 
     async getMatchTimelineByMatchId(matchId){

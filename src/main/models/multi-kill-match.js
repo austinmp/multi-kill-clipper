@@ -1,4 +1,4 @@
-const { millisToSeconds, formatDate } = require('../utils/utils.js');
+const { millisToSeconds, formatDate, isMatchOnCurrentPatch, truncatePatchVersion} = require('../utils/utils.js');
 const { 
   ChampIdToName,
   MultiKillsSingular,
@@ -34,26 +34,14 @@ class MultiKillMatch{
     this.userSelectedKillTypes = multiKillTypes;   
   }
 
-  static filterMatchesByMultiKillsAndPatch(matchHistory, multiKillTypes, currentPatch){
-    let multiKillMatches = [];
-    for(let match of matchHistory) {
-        if(!(this.isMatchOnCurrentPatch(match, currentPatch))) break;
-        if(this.isMultiKillMatch(match, multiKillTypes)) multiKillMatches.push(match);
-    }
-    return multiKillMatches;
-  };
-
-  static isMatchOnCurrentPatch(match, rawCurrentPatchData){
-    const rawMatchPatchData = match.gameVersion;
-    const matchPatch = this.truncatePatchVersion(rawMatchPatchData);
-    const currentPatch = this.truncatePatchVersion(rawCurrentPatchData);
-    return (matchPatch == currentPatch);
-  };
-
-  static truncatePatchVersion(rawPatchData){    // Shortens raw patch string to one decimal place (e.g. 11.7, 12.13, 10.9)
-    let tokens = rawPatchData.split('.');
-    const patch = `${tokens[0]}.${tokens[1]}`;
-    return patch;
+  static filterMatchesByMultiKillsAndPatch(matchHistory, multiKillTypes){
+    const multiKillMatches = []
+    matchHistory.forEach( (match) => { 
+      if(this.isMultiKillMatch(match, multiKillTypes)) {
+        multiKillMatches.push(match)
+      }
+    });
+    return multiKillMatches
   };
 
   static isMultiKillMatch(match, multiKillTypes){

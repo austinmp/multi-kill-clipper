@@ -38,6 +38,7 @@ const RedSideCameraControlsByRole = {
     'SUPPORT'    : 't',
 };
 
+// TODO: this needs to be updated
 const ChampIdToName = {
     266: 'Aatrox',
     103: 'Ahri',

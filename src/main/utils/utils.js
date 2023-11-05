@@ -44,6 +44,22 @@ function isEmpty(obj){
   return Object.keys(obj).length === 0;
 };
 
+const isMatchOnCurrentPatch = (match, rawCurrentPatchData) => {
+  const rawMatchPatchData = match.gameVersion;
+  const matchPatch = truncatePatchVersion(rawMatchPatchData);
+  const currentPatch = truncatePatchVersion(rawCurrentPatchData);
+  return (matchPatch == currentPatch);
+};
+
+
+const truncatePatchVersion = (rawPatchData) => {
+  /* Shortens raw patch string to one decimal place (e.g. 11.7, 12.13, 10.9) */
+  let tokens = rawPatchData.split('.');
+  const patch = `${tokens[0]}.${tokens[1]}`;
+  return patch;
+};
+
+
 module.exports =  {
   sleep,
   sleepInSeconds,
@@ -52,5 +68,7 @@ module.exports =  {
   secondsToMinutesFormatted,
   formatDate,
   spliceString,
-  isEmpty
+  isEmpty,
+  isMatchOnCurrentPatch,
+  truncatePatchVersion
 }

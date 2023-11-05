@@ -10,3 +10,10 @@ Front end:
 
 Backend:
 * Need to make sure im only getting ranked match data, not regular matches
+* pull list of champions dynamically, currently its static
+* install eslint
+* set up pre commit hooks
+
+
+
+ 

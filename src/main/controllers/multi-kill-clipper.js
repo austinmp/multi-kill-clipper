@@ -5,6 +5,8 @@ const ClipMaker         = require('../models/multi-kill-clip.js');
 const EventService      = require('../models/event-service');
 const WindowManager     = require('../models/window-manager.js');
 const Match             = require('../models/multi-kill-match.js');
+const { isMatchOnCurrentPatch, truncatePatchVersion} = require('../utils/utils.js');
+const { MAX_MATCHES_PER_REQUEST } = require('../constants.js');
 
 class Controller {
 
@@ -47,29 +49,29 @@ class Controller {
     };
 
     async getAllMatchesOnCurrentPatch(puuid, currentPatch){
-        let matches = [];
-        let begIndex = 0;
-        let endIndex = 20; // Max of 20 matches are returned per request
-        let currMatches;
-        let patchOfOldestMatch;
-        currentPatch = Match.MultiKillMatch.truncatePatchVersion(currentPatch);
-        do {
-            currMatches = await LeagueClient.getMatchHistoryByPuuid(puuid, begIndex, endIndex);
-            matches = matches.concat(currMatches);
-            let oldestMatch = currMatches[currMatches.length-1];
-            patchOfOldestMatch = Match.MultiKillMatch.truncatePatchVersion(oldestMatch.gameVersion);
-            begIndex += 20;
-            endIndex += 20;
-        } while(patchOfOldestMatch == currentPatch);
-        return matches;
+        let matchesOnCurrentPatch = [];
+        let start = 0, end = MAX_MATCHES_PER_REQUEST;
+        let matchBatch = await LeagueClient.getMatchHistoryByPuuid(puuid, start, end);
+        let i = 0
+        let match = matchBatch[i]        
+        while (match && isMatchOnCurrentPatch(match, currentPatch)) {
+            console.log(match)
+            matchesOnCurrentPatch.push(match);
+            i++;
+            if (i >= MAX_MATCHES_PER_REQUEST) {
+                start = end, end += MAX_MATCHES_PER_REQUEST, i = 0
+                matchBatch = await LeagueClient.getMatchHistoryByPuuid(puuid, start, end);
+            }
+            match = matchBatch[i]
+        }
 
-        // To Do: verify this function works properly
+        return matchesOnCurrentPatch;
     }
 
     async parseMatchDataForMatchesWithMultiKills(matchData, multiKillTypes){
         const multiKillMatches = Match.MultiKillMatch.filterMatchesByMultiKillsAndPatch(matchData.matchHistory, multiKillTypes, matchData.currentPatch);
         if(multiKillMatches.length === 0){
-            throw new CustomError(`No multi-kill matches of the selected type were found on the current patch (${ Match.MultiKillMatch.truncatePatchVersion(matchData.currentPatch)}).`);
+            throw new CustomError(`No multi-kill matches of the selected type were found on the current patch (${truncatePatchVersion(matchData.currentPatch)}).`);
         } 
         return multiKillMatches;
     }  
