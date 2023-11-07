@@ -1,8 +1,5 @@
-class CustomError extends Error {
+export class CustomError extends Error {
   constructor(...params) {
-    super(...params)
+    super(...params);
   }
 }
-
-module.exports = {CustomError};
-

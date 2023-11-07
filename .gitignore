@@ -5,3 +5,4 @@ settings.json/
 README.MD/
 src/main/apis/test-requests.js
 docs/todo.txt
+.env

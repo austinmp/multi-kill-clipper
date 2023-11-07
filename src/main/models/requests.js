@@ -1,43 +1,42 @@
-const { CustomError } = require('./custom-error.js');
-const Bottleneck      = require("bottleneck/es5");
-const https           = require('https');
-const fetch           = require('node-fetch');
-const { authenticate, createHttp1Request } =  require('league-connect');
-
-const MAX_REQUESTS_PER_SECOND = 20;
+import Bottleneck from 'bottleneck/es5';
+import https from 'https';
+import fetch from 'node-fetch';
+import { authenticate, createHttp1Request } from 'league-connect';
+import { MAX_REQUESTS_PER_SECOND } from '@main/constants';
+import { CustomError } from './custom-error';
 
 const limiter = new Bottleneck({
-    minTime: 1000/MAX_REQUESTS_PER_SECOND
-  });
+  minTime: 1000 / MAX_REQUESTS_PER_SECOND,
+});
 
-async function makeRequest( method, url, body = {}, retries = 3){
-    const credentials = await authenticate()
-    const response = await createHttp1Request({
-        method: method,
-        url: url,
-        body: body
-    }, credentials)
-    
-    if(!response.ok){
-        await parseResponseForErrors(response, retries-1);
-        console.log(`retrying. retries = ${retries-1}`);
-        return await makeRequest(method, url, body, retries-1);
-    }
-    try {
-        return await response.json()
-    } catch(err) {
-        return response;
-    }
-};
+export async function makeRequest(method, url, body = {}, retries = 3) {
+  const credentials = await authenticate();
+  const response = await createHttp1Request({
+    method,
+    url,
+    body,
+  }, credentials);
 
-async function parseResponseForErrors(response, retries){  
-    if(response.status === 404){
-        throw new CustomError("Failed to find the requested resource.");
-    }
+  if (!response.ok) {
+    await parseResponseForErrors(response, retries - 1);
+    console.log(`retrying. retries = ${retries - 1}`);
+    return await makeRequest(method, url, body, retries - 1);
+  }
+  try {
+    return await response.json();
+  } catch (err) {
+    return response;
+  }
+}
 
-    if(retries <= 0){
-        throw new Error(`Client Request Error: ${response.status} ${response.statusText} - ${await response.text()}`);
-    }
+async function parseResponseForErrors(response, retries) {
+  if (response.status === 404) {
+    throw new CustomError('Failed to find the requested resource.');
+  }
+
+  if (retries <= 0) {
+    throw new Error(`Client Request Error: ${response.status} ${response.statusText} - ${await response.text()}`);
+  }
 }
 
 // class RequestOptions{
@@ -57,10 +56,3 @@ async function parseResponseForErrors(response, retries){
 //         return myHeaders;
 //     }
 // }
-
-module.exports = { makeRequest };
-
-
-// import https from 'https';
-// import fetch from 'node-fetch'
-// export {makeRequest};

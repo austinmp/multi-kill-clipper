@@ -1,25 +1,16 @@
+import { windowManager, Window } from 'node-window-manager';
 
-const WindowManager = require('node-window-manager');
-
-function bringWindowToFocus(pid){
-    const replayWindow = getWindowId(pid);
-    replayWindow.bringToTop();
-}
-    
-function getWindowId(pid){
-    const windows = WindowManager.windowManager.getWindows();
-    for(let window of windows){
-        if(window.processId == pid){
-            return new WindowManager.Window(window.id);
-        }
+export function getWindowId(pid) {
+  const windows = windowManager.getWindows();
+  for (const window of windows) {
+    if (window.processId == pid) {
+      return new Window(window.id);
     }
-    throw new Error("Failed to find a running instance of a League of Legends replay");
+  }
+  throw new Error('Failed to find a running instance of a League of Legends replay');
 }
 
-module.exports = { bringWindowToFocus };
-// import WindowManager from 'node-window-manager';
-// export {bringWindowToFocus};
-
-
-
-
+export function bringWindowToFocus(pid) {
+  const replayWindow = getWindowId(pid);
+  replayWindow.bringToTop();
+}

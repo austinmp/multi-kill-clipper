@@ -6,3 +6,7 @@
 `npm install`
 3. Start Electron App
 `npm start`
+
+## Troubleshooting:
+1. If `robotjs` package gives errors see this guide `https://github.com/octalmage/robotjs/wiki/Electron` 
+
