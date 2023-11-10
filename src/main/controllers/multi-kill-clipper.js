@@ -4,11 +4,11 @@ import LeagueClient from '@main/apis/league-client';
 import ClipMaker from '@main/models/multi-kill-clip';
 import EventService from '@main/models/event-service';
 import { bringWindowToFocus } from '@main/models/window-manager'; // may need to fix this
-import { Match } from '@main/models/multi-kill-match';
+import { MultiKillMatch} from '@main/models/multi-kill-match';
 import { isMatchOnCurrentPatch, truncatePatchVersion } from '@main/utils/utils';
 import { MAX_MATCHES_PER_REQUEST } from '@main/constants';
 
-class Controller {
+export class Controller {
   constructor() {
     this.multiKillMatches = [];
     this.multiKillTypes = [];
@@ -69,7 +69,7 @@ class Controller {
   }
 
   async parseMatchDataForMatchesWithMultiKills(matchData, multiKillTypes) {
-    const multiKillMatches = Match.MultiKillMatch.filterMatchesByMultiKillsAndPatch(matchData.matchHistory, multiKillTypes, matchData.currentPatch);
+    const multiKillMatches = MultiKillMatch.filterMatchesByMultiKillsAndPatch(matchData.matchHistory, multiKillTypes, matchData.currentPatch);
     if (multiKillMatches.length === 0) {
       throw new CustomError(`No multi-kill matches of the selected type were found on the current patch (${truncatePatchVersion(matchData.currentPatch)}).`);
     }
@@ -79,7 +79,7 @@ class Controller {
   async initializeMultiKillMatchObjects(multiKillMatches, multiKillTypes) {
     const matchObjects = [];
     for (const match of multiKillMatches) {
-      const MultiKillMatch = new Match.MultiKillMatch(match, multiKillTypes);
+      const MultiKillMatch = new MultiKillMatch(match, multiKillTypes);
       const matchTimeline = await LeagueClient.getMatchTimelineByMatchId(MultiKillMatch.matchId);
       const endOfMatchData = await LeagueClient.getEndOfMatchDataByMatchId(MultiKillMatch.matchId);
       const participantId = MultiKillMatch.getParticipantIdFromEndOfMatchData(MultiKillMatch.summonerName, endOfMatchData);
