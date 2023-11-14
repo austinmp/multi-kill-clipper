@@ -5,7 +5,6 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "electron-forge start",
-    "rebuild": "npm rebuild --runtime=electron --target=12.0.5 --disturl=https://atom.io/download/atom-shell --abi=93",
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "electron-forge package",
     "make": "electron-forge make"
@@ -13,14 +12,14 @@
   "author": "Austin Pinto",
   "license": "ISC",
   "dependencies": {
+    "@nut-tree/nut-js": "^3.1.2",
     "bottleneck": "^2.19.5",
     "electron-reload": "^1.5.0",
     "electron-squirrel-startup": "^1.0.0",
     "find-process": "^1.4.4",
     "league-connect": "*",
     "node-fetch": "^2.6.1",
-    "node-window-manager": "^2.2.4",
-    "robotjs": "^0.6.0"
+    "node-window-manager": "^2.2.4"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
@@ -28,7 +27,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
-    "electron": "^12.0.5"
+    "electron": "^17.1.0"
   },
   "config": {
     "forge": {

@@ -1,6 +1,6 @@
 const { sleepInSeconds }    = require('../utils/utils.js');
 const { CustomError }       = require('../models/custom-error.js');
-const { makeRequest }       = require('../models/requests.js');
+const { makeRequest }       = require('../models/replay-request.js');
 const EventService          = require('../models/event-service');
 
 class Replay {

@@ -4,11 +4,6 @@ const EventService      = require('../main/models/event-service.js');
 const Controller        = require('../main/controllers/multi-kill-clipper.js');
 const MultiKillTable    = require('./multi-kill-table.js');
 
-// const { CustomError }   = require('../models/custom-error.js');
-// const { ipcRenderer }   = require('electron');
-// const EventService      = require('../models/event-service.js');
-// const Controller        = require('../controllers/multi-kill-clipper.js');
-// const MultiKillTable    = require('./multi-kill-table.js');
 
 
 window.addEventListener('DOMContentLoaded', async function(){
@@ -218,7 +213,3 @@ function collapseAboutSection(){
     collapseButton.classList.add('collapsed');
     collapseButton.innerHTML = '+';
 }
-
-
-
-

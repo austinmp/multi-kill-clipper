@@ -1,7 +1,8 @@
 const { BlueSideCameraControlsByRole, RedSideCameraControlsByRole } = require('../../../config/constants.js');
 const { sleepInSeconds }                                            = require('../utils/utils.js');
 const EventService                                                  = require('./event-service.js');
-const Robot                                                         = require('robotjs');
+const { keyboard, Key } = require("@nut-tree/nut-js");
+
 
 const TIME_TO_CLIP_BEFORE_KILL = 15;
 const TIME_TO_CLIP_AFTER_KILL = 5;
@@ -36,7 +37,7 @@ class MultiKillClip {
         await this.setRenderProperties();
         await sleepInSeconds(2);
         await this.setRecordingProperties(startTime, endTime, true);
-        this.lockCamera();
+        await this.lockCamera();
         await this.waitForRecordingToFinish(waitTime);
         EventService.publish('clipProgress', `Clip recorded succcessfully...`);
         EventService.publish('renderingComplete', this.filePath);
@@ -60,7 +61,7 @@ class MultiKillClip {
         let res = await this.replay.postPlaybackProperties(options);
     }
 
-    lockCamera(){
+    async lockCamera(){
         const teamId = this.MultiKillMatch.teamId;
         const role = this.MultiKillMatch.role;
         let cameraLockKey;
@@ -68,10 +69,10 @@ class MultiKillClip {
             cameraLockKey = BlueSideCameraControlsByRole[`${role}`];
         } else {
             cameraLockKey = RedSideCameraControlsByRole[`${role}`];
-        }     
-        Robot.keyTap(`s`); 
-        Robot.keyTap(`${cameraLockKey}`);
-        Robot.keyTap(`${cameraLockKey}`);
+        }
+        await keyboard.type(Key.S) // manual camera controls
+        await keyboard.type(cameraLockKey)
+        await keyboard.type(cameraLockKey)
     }
 
     async setRecordingProperties(startTime, endTime, isRecording){

@@ -1,3 +1,5 @@
+const { Key } = require("@nut-tree/nut-js");
+
 const MultiKillsPlural = {
     1 : 'firstBloodKill',
     2 : 'doubleKills',
@@ -23,19 +25,19 @@ const RolesEnum = {
 }
 
 const BlueSideCameraControlsByRole = {
-    'TOP'        : 1,
-    'JUNGLE'     : 2,
-    'MIDDLE'     : 3,
-    'BOTTOM'     : 4,
-    'SUPPORT'    : 5
+    'TOP'        : Key.Num1,
+    'JUNGLE'     : Key.Num2,
+    'MIDDLE'     : Key.Num3,
+    'BOTTOM'     : Key.Num4,
+    'SUPPORT'    : Key.Num5
 };
 
 const RedSideCameraControlsByRole = {
-    'TOP'        : 'q',
-    'JUNGLE'     : 'w',
-    'MIDDLE'     : 'e',
-    'BOTTOM'     : 'r',
-    'SUPPORT'    : 't',
+    'TOP'        : Key.Q,
+    'JUNGLE'     : Key.W,
+    'MIDDLE'     : Key.E,
+    'BOTTOM'     : Key.R,
+    'SUPPORT'    : Key.T,
 };
 
 // TODO: this needs to be updated
