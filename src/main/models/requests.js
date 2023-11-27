@@ -1,10 +1,8 @@
 const { CustomError } = require('./custom-error.js');
 const Bottleneck      = require("bottleneck/es5");
-const https           = require('https');
-const fetch           = require('node-fetch');
 const { authenticate, createHttp1Request } =  require('league-connect');
+const { MAX_REQUESTS_PER_SECOND } = require('../constants.js')
 
-const MAX_REQUESTS_PER_SECOND = 20;
 
 const limiter = new Bottleneck({
     minTime: 1000/MAX_REQUESTS_PER_SECOND
@@ -40,27 +38,4 @@ async function parseResponseForErrors(response, retries){
     }
 }
 
-// class RequestOptions{
-//     constructor(method, headers, body){
-//         this.method = method, // GET or POST
-//         this.headers = this.setHeaders(headers);
-//         this.agent = new https.Agent({rejectUnauthorized: false});
-//         this.body = (method.toLowerCase() == 'get') ? undefined : JSON.stringify(body);
-//     }
-
-//     setHeaders(headers){
-//         let myHeaders = new fetch.Headers();
-//         myHeaders.append('Content-Type', 'application/json');
-//         for(let key in headers){
-//             myHeaders.append(key, headers[key]);
-//         }
-//         return myHeaders;
-//     }
-// }
-
 module.exports = { makeRequest };
-
-
-// import https from 'https';
-// import fetch from 'node-fetch'
-// export {makeRequest};

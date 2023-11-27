@@ -2,8 +2,8 @@ const { CustomError } = require('./custom-error.js');
 const Bottleneck      = require("bottleneck/es5");
 const https           = require('https');
 const fetch           = require('node-fetch');
+const { MAX_REQUESTS_PER_SECOND } = require('../constants.js')
 
-const MAX_REQUESTS_PER_SECOND = 20;
 
 const limiter = new Bottleneck({
     minTime: 1000/MAX_REQUESTS_PER_SECOND

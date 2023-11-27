@@ -1,17 +1,9 @@
 const { sleepInSeconds }                                            = require('../utils/utils.js');
 const EventService                                                  = require('./event-service.js');
-const { keyboard, Key, sleep } = require("@nut-tree/nut-js");
 const {
-    BLUE_SIDE_TEAM_ID,
-    BLUE_SIDE_CAMERA_CONTROLS_BY_ROLE,
-    RED_SIDE_CAMERA_CONTROLS_BY_ROLE,
     TIME_TO_CLIP_BEFORE_KILL,
     TIME_TO_CLIP_AFTER_KILL,
 } = require("../constants.js")
-const { bringWindowToFocus } = require("./window-manager")
-const { CustomError }   = require('../models/custom-error.js');
-
-
 
 
 class MultiKillClip {
@@ -48,12 +40,10 @@ class MultiKillClip {
         EventService.publish('renderingComplete', this.filePath);
     };
 
-
-
     async setRenderProperties(){
         const options = {
             interfaceTimeline : false,
-            cameraAttached: true,  // cameraAttatched only works when cameraMode=fps
+            cameraAttached: true,  // cameraAttatched setting only works when cameraMode=fps
             selectionName: this.MultiKillMatch.summonerName,
             cameraMode: 'fps',
             selectionOffset: {

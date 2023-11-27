@@ -1,28 +1,10 @@
-const { Key } = require("@nut-tree/nut-js");
-
 const TIME_TO_CLIP_BEFORE_KILL = 15;
-const TIME_TO_CLIP_AFTER_KILL = 5;
+const TIME_TO_CLIP_AFTER_KILL = 15;
 const MAX_MATCHES_PER_REQUEST = 20;
-const BLUE_SIDE_TEAM_ID = '100'
-const RED_SIDE_TEAM_ID = '200';
+const MAX_REQUESTS_PER_SECOND = 20
 const MULTI_KILL_TIMER = 10000;  // (10 seconds) Allowed time in milliseconds before multi-kill timer resets (1-4 kills).
 const PENTA_KILL_TIMER = 30000;  // (30 seconds) Multi-kill timer is slower to reset when going from kill 4 to 5.
 
-const BLUE_SIDE_CAMERA_CONTROLS_BY_ROLE = {
-    'TOP': Key.Num1,
-    'JUNGLE': Key.Num2,
-    'MIDDLE': Key.Num3,
-    'BOTTOM': Key.Num4,
-    'SUPPORT': Key.Num5
-};
-
-const RED_SIDE_CAMERA_CONTROLS_BY_ROLE = {
-    'TOP': Key.Q,
-    'JUNGLE': Key.W,
-    'MIDDLE': Key.E,
-    'BOTTOM': Key.R,
-    'SUPPORT': Key.T,
-};
 
 const MultiKillsPlural = {
     1: 'firstBloodKill',
@@ -51,10 +33,7 @@ const RolesEnum = {
 
 module.exports = {
     MAX_MATCHES_PER_REQUEST,
-    BLUE_SIDE_TEAM_ID,
-    RED_SIDE_TEAM_ID,
-    BLUE_SIDE_CAMERA_CONTROLS_BY_ROLE,
-    RED_SIDE_CAMERA_CONTROLS_BY_ROLE,
+    MAX_REQUESTS_PER_SECOND,
     TIME_TO_CLIP_BEFORE_KILL,
     TIME_TO_CLIP_AFTER_KILL,
     PENTA_KILL_TIMER,
