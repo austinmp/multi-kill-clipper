@@ -7,6 +7,7 @@ class Replay {
     
     constructor(){
         this.url = 'https://127.0.0.1:2999';
+        this.pid = null;
     }
 
     async init(){
@@ -53,6 +54,10 @@ class Replay {
         return await makeRequest('POST', this.url + '/replay/recording', {}, options);
     };
 
+    async getRenderProperties(){
+        return await makeRequest('GET', this.url + '/replay/render');
+    };
+
     async postRenderProperties(options){
         return await makeRequest('POST', this.url + '/replay/render', {}, options);
     }
@@ -73,7 +78,7 @@ class Replay {
         } while(!responseReceived && numRetries > 0 );
         if(numRetries <= 0){
             throw new CustomError("Failed to launch replay. Please ensure the replay API is enabled and the client is running, then try again");
-        } 
+        }
         await this.waitForAssetsToLoad();
         EventService.publish('clipProgress', `Replay loaded succcessfully...`);
     };

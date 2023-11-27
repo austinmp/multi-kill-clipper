@@ -3,9 +3,8 @@ const { Replay }        = require('../apis/replay.js');
 const LeagueClient      = require('../apis/league-client.js');
 const ClipMaker         = require('../models/multi-kill-clip.js');
 const EventService      = require('../models/event-service');
-const WindowManager     = require('../models/window-manager.js');
 const Match             = require('../models/multi-kill-match.js');
-const { isMatchOnCurrentPatch, truncatePatchVersion} = require('../utils/utils.js');
+const { isMatchOnCurrentPatch, truncatePatchVersion, getRiotId} = require('../utils/utils.js');
 const { MAX_MATCHES_PER_REQUEST } = require('../constants.js');
 
 class Controller {
@@ -14,22 +13,25 @@ class Controller {
         this.multiKillMatches = [];
         this.multiKillTypes = [];
         this.summonerName = '';
+        this.riotId = '';
         this.subscribeToFrontEndEvents();
     }
     
-    async getMultiKillMatches(summonerName, multiKillTypes){
-        if(this.isSameSummonerName(summonerName) && this.isSameMultiKillTypes(multiKillTypes) && this.multiKillMatches.length > 0 ){
+
+    async getMultiKillMatches(summonerName, multiKillTypes, tagLine="#NA1"){
+        if(this.isSameSummoner(summonerName, tagLine) && this.isSameMultiKillTypes(multiKillTypes) && this.multiKillMatches.length > 0 ){
             return this.multiKillMatches;
-        }        
-        const matchData = await this.getMatchDataFromClient(summonerName);
+        }
+        this.riotId = getRiotId(summonerName, tagLine)
+        const matchData = await this.getMatchDataFromClient();
         const multiKillMatches = await this.parseMatchDataForMatchesWithMultiKills(matchData,  multiKillTypes);
         const multiKillMatchObjects = await this.initializeMultiKillMatchObjects(multiKillMatches, multiKillTypes);
         this.setMultiKillMatches(summonerName, multiKillTypes, multiKillMatchObjects);
         return this.multiKillMatches;        
     };
 
-    isSameSummonerName(summonerName){
-        return this.summonerName === summonerName;
+    isSameSummoner(summonerName, tagLine){
+        return this.riotId === getRiotId(summonerName, tagLine);
     }
 
     isSameMultiKillTypes(multiKillTypes){
@@ -40,9 +42,9 @@ class Controller {
         return true;
     }
 
-    async getMatchDataFromClient(summonerName){
+    async getMatchDataFromClient(){
         const matchData = {};
-        matchData.puuid             = await LeagueClient.getPuuidBySummonerName(summonerName);
+        matchData.puuid             = await LeagueClient.getPuuidBySummonerName(this.riotId);
         matchData.currentPatch      = await LeagueClient.getPatchVersion();
         matchData.matchHistory      = await this.getAllMatchesOnCurrentPatch(matchData.puuid, matchData.currentPatch);
         return matchData;
@@ -85,6 +87,7 @@ class Controller {
             let participantId = MultiKillMatch.getParticipantIdFromEndOfMatchData(MultiKillMatch.summonerName, endOfMatchData);
             let allKillsForParticipant = MultiKillMatch.getParticipantKillsFromMatchTimeline(matchTimeline, participantId);
             let multiKills = MultiKillMatch.getMultiKillsFromAllMatchKills(allKillsForParticipant);
+            MultiKillMatch.setChampionName()
             MultiKillMatch.setParticipantRole(endOfMatchData, participantId);
             MultiKillMatch.setParticipantTeamId(endOfMatchData, participantId);
             MultiKillMatch.participantId = participantId;
@@ -115,10 +118,9 @@ class Controller {
         await LeagueClient.launchReplay(MultiKillMatch.matchId);
         await replay.load(10, 5); // Add global vars
         await replay.init();
-        WindowManager.bringWindowToFocus(replay.pid);
         const clip = new ClipMaker.MultiKillClip(replay, MultiKillMatch, indexOfKill, highlightsFolderPath)
         await clip.createClip();
-        await replay.exit();
+        await replay.exit()
     }
     
     setMultiKillMatches(summonerName, multiKillTypes, matchList ){

@@ -1,11 +1,18 @@
-const { BlueSideCameraControlsByRole, RedSideCameraControlsByRole } = require('../../../config/constants.js');
 const { sleepInSeconds }                                            = require('../utils/utils.js');
 const EventService                                                  = require('./event-service.js');
-const { keyboard, Key } = require("@nut-tree/nut-js");
+const { keyboard, Key, sleep } = require("@nut-tree/nut-js");
+const {
+    BLUE_SIDE_TEAM_ID,
+    BLUE_SIDE_CAMERA_CONTROLS_BY_ROLE,
+    RED_SIDE_CAMERA_CONTROLS_BY_ROLE,
+    TIME_TO_CLIP_BEFORE_KILL,
+    TIME_TO_CLIP_AFTER_KILL,
+} = require("../constants.js")
+const { bringWindowToFocus } = require("./window-manager")
+const { CustomError }   = require('../models/custom-error.js');
 
 
-const TIME_TO_CLIP_BEFORE_KILL = 15;
-const TIME_TO_CLIP_AFTER_KILL = 5;
+
 
 class MultiKillClip {
     constructor(replay, MultiKillMatch, indexOfKill, filePath){
@@ -31,21 +38,29 @@ class MultiKillClip {
         const endTime = this.kill.end + TIME_TO_CLIP_AFTER_KILL;
         const waitTime = endTime -  startTime;
         await this.setRecordingProperties(startTime, endTime, false); // make sure we arent recording
-        await this.setPlaybackProperties(startTime, true);
-        await sleepInSeconds(2);
-        await this.setPlaybackProperties(startTime, false);
         await this.setRenderProperties();
         await sleepInSeconds(2);
+        await this.setPlaybackProperties(startTime, false);
+        await sleepInSeconds(2);
         await this.setRecordingProperties(startTime, endTime, true);
-        await this.lockCamera();
         await this.waitForRecordingToFinish(waitTime);
         EventService.publish('clipProgress', `Clip recorded succcessfully...`);
         EventService.publish('renderingComplete', this.filePath);
     };
 
+
+
     async setRenderProperties(){
         const options = {
-            'interfaceTimeline' : false,
+            interfaceTimeline : false,
+            cameraAttached: true,  // cameraAttatched only works when cameraMode=fps
+            selectionName: this.MultiKillMatch.summonerName,
+            cameraMode: 'fps',
+            selectionOffset: {
+                x: 0.0,
+                y: 1911.85,
+                z: -1200.0
+            }
         }
         return await this.replay.postRenderProperties(options);
     }
@@ -59,20 +74,6 @@ class MultiKillClip {
             'length'    : 0
         }
         let res = await this.replay.postPlaybackProperties(options);
-    }
-
-    async lockCamera(){
-        const teamId = this.MultiKillMatch.teamId;
-        const role = this.MultiKillMatch.role;
-        let cameraLockKey;
-        if(teamId == '100') {
-            cameraLockKey = BlueSideCameraControlsByRole[`${role}`];
-        } else {
-            cameraLockKey = RedSideCameraControlsByRole[`${role}`];
-        }
-        await keyboard.type(Key.S) // manual camera controls
-        await keyboard.type(cameraLockKey)
-        await keyboard.type(cameraLockKey)
     }
 
     async setRecordingProperties(startTime, endTime, isRecording){

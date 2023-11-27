@@ -17,6 +17,10 @@ class LeagueClient  {
         return await makeRequest('GET', '/lol-game-settings/v1/game-settings');
     }
 
+    async getInputSettings(){
+        return await makeRequest('GET', '/lol-game-settings/v1/input-settings')
+    }
+
     async patchGameSettings(settingsResource){
         return await makeRequest('PATCH', '/lol-game-settings/v1/game-settings', settingsResource);
     }

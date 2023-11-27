@@ -1,5 +1,6 @@
 const { secondsToMinutesFormatted } = require('../main/utils/utils.js');
-const { RolesEnum } = require('../../config/constants.js');
+const { RolesEnum } = require('../main/constants.js');
+
 
 function clearTable(){
     const table = document.getElementById('multiKillTable');

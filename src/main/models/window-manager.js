@@ -17,8 +17,6 @@ function getWindowId(pid){
 }
 
 module.exports = { bringWindowToFocus };
-// import WindowManager from 'node-window-manager';
-// export {bringWindowToFocus};
 
 
 

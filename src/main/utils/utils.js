@@ -59,6 +59,9 @@ const truncatePatchVersion = (rawPatchData) => {
   return patch;
 };
 
+const getRiotId = (summonerName, tagLine) => {
+  return `${summonerName}${tagLine}`
+}
 
 module.exports =  {
   sleep,
@@ -70,5 +73,6 @@ module.exports =  {
   spliceString,
   isEmpty,
   isMatchOnCurrentPatch,
-  truncatePatchVersion
+  truncatePatchVersion,
+  getRiotId
 }

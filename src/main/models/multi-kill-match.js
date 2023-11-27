@@ -1,12 +1,13 @@
-const { millisToSeconds, formatDate, isMatchOnCurrentPatch, truncatePatchVersion} = require('../utils/utils.js');
-const { 
-  ChampIdToName,
-  MultiKillsSingular,
-  MultiKillsPlural 
-} = require('../../../config/constants.js');
+const { millisToSeconds, formatDate} = require('../utils/utils.js');
+const {
+  MULTI_KILL_TIMER, 
+  PENTA_KILL_TIMER,
+  MultiKillsPlural,
+  MultiKillsSingular
+} = require("../constants.js")
 
-const MULTIKILL_TIMER = 10000;  // (10 seconds) Allowed time in milliseconds before multi-kill timer resets (1-4 kills).
-const PENTAKILL_TIMER = 30000;  // (30 seconds) Multi-kill timer is slower to reset when going from kill 4 to 5.
+const { getChampionByKey } = require("../apis/ddragon.js")
+
 
 class MultiKill {
   constructor(type, start, end){
@@ -24,14 +25,14 @@ class MultiKillMatch{
     this.summonerId = match.participantIdentities[0].player.summonerId;
     this.accountId = match.participantIdentities[0].player.accountId;
     this.championId = match.participants[0].championId;
-    this.championName = ChampIdToName[this.championId];
     this.firstBloodKill = match.participants[0].stats.firstBloodKill;
     this.doubleKills = match.participants[0].stats.doubleKills;
     this.tripleKills =  match.participants[0].stats.tripleKills;
     this.quadraKills = match.participants[0].stats.quadraKills;
     this.pentaKills = match.participants[0].stats.pentaKills;
     this.largestMultiKill = match.participants[0].stats.largestMultiKill;
-    this.userSelectedKillTypes = multiKillTypes;   
+    this.userSelectedKillTypes = multiKillTypes;
+    this.championName = null;
   }
 
   static filterMatchesByMultiKillsAndPatch(matchHistory, multiKillTypes){
@@ -68,6 +69,12 @@ class MultiKillMatch{
     this.role = (role == "DUO_SUPPORT") ? "SUPPORT" : lane;
   };
 
+  async setChampionName() {
+    // fetch champion name from ddragon
+    const championData =  await getChampionByKey(this.championId)
+    this.championName = championData?.name
+  }
+
   setParticipantTeamId(matchData, participantId){
     const participantData = matchData.participants[participantId-1];
     const teamId = participantData.teamId;
@@ -99,7 +106,7 @@ class MultiKillMatch{
     for(let i = 0; i < kills.length; i++){
         let currKillTime = kills[i].timestamp;
         let nextKillTime = (i + 1 < kills.length) ? kills[i+1].timestamp : Number.MAX_VALUE;
-        if( (nextKillTime <= currKillTime + MULTIKILL_TIMER) || (killType === 4 && nextKillTime <= currKillTime + PENTAKILL_TIMER) ){
+        if( (nextKillTime <= currKillTime + MULTI_KILL_TIMER) || (killType === 4 && nextKillTime <= currKillTime + PENTA_KILL_TIMER) ){
             killType++;
             endTime = nextKillTime;
         } else {
