@@ -4,35 +4,40 @@ const LeagueClient      = require('../apis/league-client.js');
 const ClipMaker         = require('../models/multi-kill-clip.js');
 const EventService      = require('../models/event-service');
 const Match             = require('../models/multi-kill-match.js');
+const { Summoner }          = require('../models/summoner.js')
 const { isMatchOnCurrentPatch, truncatePatchVersion, getRiotId} = require('../utils/utils.js');
 const { MAX_MATCHES_PER_REQUEST } = require('../constants.js');
+
 
 class Controller {
 
     constructor(){
         this.multiKillMatches = [];
         this.multiKillTypes = [];
-        this.summonerName = '';
-        this.riotId = '';
         this.subscribeToFrontEndEvents();
-    }
-    
+        this.summoner = null;
+    }       
 
     async getMultiKillMatches(summonerName, multiKillTypes, tagLine="#NA1"){
-        if(this.isSameSummoner(summonerName, tagLine) && this.isSameMultiKillTypes(multiKillTypes) && this.multiKillMatches.length > 0 ){
+        const summoner = new Summoner(summonerName, tagLine);
+        const isSummonerFound = await summoner.isFound()
+        if(!isSummonerFound){
+            throw new CustomError(`${summoner.riotId} was not found; verify the name and try again.`)
+        }
+
+        // check if we can return cached multi-kills
+        if (this.summoner?.riotId == summoner.riotId && this.isSameMultiKillTypes(multiKillTypes) && this.multiKillMatches.length > 0 ){
             return this.multiKillMatches;
         }
-        this.riotId = getRiotId(summonerName, tagLine)
+
+        this.summoner = summoner;
         const matchData = await this.getMatchDataFromClient();
         const multiKillMatches = await this.parseMatchDataForMatchesWithMultiKills(matchData,  multiKillTypes);
         const multiKillMatchObjects = await this.initializeMultiKillMatchObjects(multiKillMatches, multiKillTypes);
         this.setMultiKillMatches(summonerName, multiKillTypes, multiKillMatchObjects);
-        return this.multiKillMatches;        
+        return this.multiKillMatches;              
     };
 
-    isSameSummoner(summonerName, tagLine){
-        return this.riotId === getRiotId(summonerName, tagLine);
-    }
 
     isSameMultiKillTypes(multiKillTypes){
         if(multiKillTypes.length != this.multiKillTypes.length) return false;
@@ -44,7 +49,7 @@ class Controller {
 
     async getMatchDataFromClient(){
         const matchData = {};
-        matchData.puuid             = await LeagueClient.getPuuidBySummonerName(this.riotId);
+        matchData.puuid             = this.summoner.data.puuid
         matchData.currentPatch      = await LeagueClient.getPatchVersion();
         matchData.matchHistory      = await this.getAllMatchesOnCurrentPatch(matchData.puuid, matchData.currentPatch);
         return matchData;

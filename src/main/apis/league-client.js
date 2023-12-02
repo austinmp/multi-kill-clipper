@@ -87,11 +87,9 @@ class LeagueClient  {
         return await makeRequest('GET', `/lol-match-history/v1/games/${matchId}`);
     };
 
-    async getPuuidBySummonerName(summonerName){
-        const accountData = await makeRequest('GET', `/lol-summoner/v1/summoners?name=${summonerName}`);
-        const puuid = accountData.puuid;
-        return puuid;
-    };
+    async getSummoners(riotId) {
+        return await makeRequest('GET', `/lol-summoner/v1/summoners?name=${riotId}`);
+    }
 
     async getMatchHistoryByPuuid(puuid, begIndex, endIndex){
         const matchData = await makeRequest('GET', `/lol-match-history/v1/products/lol/${puuid}/matches?begIndex=${begIndex}&endIndex=${endIndex}`);
