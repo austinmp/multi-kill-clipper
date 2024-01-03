@@ -3,28 +3,35 @@ import LeagueClient from '../apis/league-client';
 class Summoner {
   summonerName: string;
 
-  tagLine: string;
+  tagline: string;
 
   riotId: string;
 
   data: any;
 
-  constructor(summonerName: string, tagLine: string) {
+  puuid: string;
+
+  constructor(summonerName: string, tagline: string, puuid: string = '') {
     this.summonerName = summonerName;
-    this.tagLine = tagLine;
-    this.riotId = `${summonerName}${tagLine}`;
+    this.tagline = tagline;
+    this.riotId = `${summonerName}#${tagline}`;
+    this.puuid = puuid;
     this.data = null;
   }
 
-  async isFound() {
+  async isFound(): Promise<boolean> {
     try {
-      this.data = await LeagueClient.getSummoners(this.riotId);
+      const summonerData = await LeagueClient.getSummoners(this.riotId);
+      if (summonerData?.puuid) {
+        this.puuid = summonerData.puuid;
+        this.data = summonerData;
+        return true;
+      }
+      return false;
     } catch (error) {
-      // pass
-    } finally {
-      return !!this.data?.puuid;
+      return false;
     }
   }
 }
 
-export { Summoner };
+export default Summoner;

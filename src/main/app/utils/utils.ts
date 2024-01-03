@@ -58,8 +58,8 @@ const truncatePatchVersion = (rawPatchData: any) => {
   return patch;
 };
 
-const getRiotId = (summonerName: any, tagLine: any) => {
-  return `${summonerName}${tagLine}`;
+const getRiotId = (summonerName: any, tagline: any) => {
+  return `${summonerName}${tagline}`;
 };
 
 export {

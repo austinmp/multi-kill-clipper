@@ -1,6 +1,7 @@
 import CustomError from '../models/custom-error';
 import { makeRequest } from '../models/requests';
 import EventService from '../models/event-service';
+import Summoner from '../models/summoner';
 
 class LeagueClient {
   patch: string;
@@ -103,10 +104,7 @@ class LeagueClient {
   }
 
   async getSummoners(riotId: any) {
-    return await makeRequest(
-      'GET',
-      `/lol-summoner/v1/summoners?name=${riotId}`,
-    );
+    return makeRequest('GET', `/lol-summoner/v1/summoners?name=${riotId}`);
   }
 
   async getMatchHistoryByPuuid(puuid: any, begIndex: any, endIndex: any) {
@@ -131,6 +129,22 @@ class LeagueClient {
     if (this.patch.length > 0) return this.patch;
     const rawPatchData = await makeRequest('GET', '/lol-patch/v1/game-version');
     return rawPatchData;
+  }
+
+  async getQueues() {
+    return makeRequest('GET', 'lol-game-queues/v1/queues');
+  }
+
+  async getCurrentSummoner(): Promise<Summoner> {
+    const currentSummoner = await makeRequest(
+      'GET',
+      '/lol-summoner/v1/current-summoner',
+    );
+    return new Summoner(
+      currentSummoner.displayName,
+      currentSummoner.tagLine,
+      currentSummoner.puuid,
+    );
   }
 }
 

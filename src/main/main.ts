@@ -14,6 +14,8 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import LeagueClient from './app/apis/league-client';
+import MultiKillClipperMain from './app/controllers/MultiKillClipperMain';
 
 class AppUpdater {
   constructor() {
@@ -30,6 +32,42 @@ ipcMain.on('ipc-example', async (event, arg) => {
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
 });
+
+ipcMain.handle('get-current-summoner', async (event: any) => {
+  try {
+    const response = await LeagueClient.getCurrentSummoner();
+    return response; // This will be sent back to the renderer process
+  } catch (error: any) {
+    console.error('Error getting current summoner:', error);
+    return { error: error.message }; // Send back error information if needed
+  }
+});
+
+ipcMain.handle(
+  'get-multi-kills',
+  async (
+    event: any,
+    summonerName,
+    multiKillTypes,
+    currentSummoner,
+    tagline,
+  ) => {
+    try {
+      const multiKillClipper = new MultiKillClipperMain(
+        summonerName,
+        multiKillTypes,
+        currentSummoner,
+        tagline,
+      );
+      const response = await multiKillClipper.getMultiKills();
+      console.log(response);
+      return response; // This will be sent back to the renderer process
+    } catch (error: any) {
+      console.error('Error getting current summoner:', error);
+      return { error: error.message }; // Send back error information if needed
+    }
+  },
+);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -75,6 +113,7 @@ const createWindow = async () => {
     height: 728,
     icon: getAssetPath('icon.png'),
     webPreferences: {
+      contextIsolation: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
