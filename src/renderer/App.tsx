@@ -1,6 +1,6 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
-import MultiKillClipper from './MultiKillClipper';
+import MultiKillClipperWrapper from './MultiKillClipperWrapper';
 
 export default function App() {
   return (
@@ -8,7 +8,7 @@ export default function App() {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path="/" element={<MultiKillClipper />} />
+          <Route path="/" element={<MultiKillClipperWrapper />} />
         </Routes>
       </Router>
     </>

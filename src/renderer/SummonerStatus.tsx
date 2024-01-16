@@ -1,35 +1,34 @@
-import Button from '@mui/material/Button';
 import styles from './multi-kill-clipper.module.css';
 import Summoner from '../main/app/models/summoner';
+import { Typography } from '@mui/material';
 
 type SummonerStatusProps = {
-  summoner: Summoner | null;
-  summonerLoading: boolean;
+  loggedInSummoner: Summoner | null;
+  isLoggedInSummonerLoading: boolean;
 };
-
 /*
   Component acting as a status indicator for whether the Multi Kill Clipper app is able to
   connect to the League Client. If we are connected, the current Summoner will be displayed.
 */
 export default function SummonerStatus({
-  summoner,
-  summonerLoading,
+  loggedInSummoner,
+  isLoggedInSummonerLoading,
 }: SummonerStatusProps) {
-  const getStatusDot = () => {
-    if (summonerLoading) return '🟡 Connecting...';
-    return summoner ? '🟢 Connected' : '🔴 Not Connected';
-  };
-
   return (
     <div className={styles['logged-in-summoner-ctn']}>
       <div className={styles['logged-in-summoner']}>
-        {summoner && !summonerLoading && (
+        {loggedInSummoner && !isLoggedInSummonerLoading && (
           <>
-            <span>{summoner.summonerName}</span>
-            <span>{`#${summoner.tagline}`}</span>
+            <Typography variant="h6" className={styles['summoner-name']}>
+              {` ⚔️ ${loggedInSummoner.summonerName}`}
+            </Typography>
+            <div>{`🟢 Connected - #${loggedInSummoner.tagline}`}</div>
           </>
         )}
-        <div>{getStatusDot()}</div>
+        {!loggedInSummoner && !isLoggedInSummonerLoading && (
+          <div>🔴 Not Connected</div>
+        )}
+        {isLoggedInSummonerLoading && <div>🟡 Connecting...</div>}
       </div>
     </div>
   );

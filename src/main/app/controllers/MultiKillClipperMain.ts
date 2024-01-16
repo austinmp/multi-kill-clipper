@@ -4,6 +4,7 @@ import LeagueClient from '../apis/league-client';
 import { MultiKillClip } from '../models/multi-kill-clip';
 import EventService from '../models/event-service';
 import MultiKillMatch from '../models/multi-kill-match';
+import MultiKill from '../models/multi-kill';
 import Summoner from '../models/summoner';
 import { getRiotId, truncatePatchVersion } from '../utils/utils';
 import {
@@ -164,31 +165,33 @@ class MultiKillClipperMain {
   //   return matchObjects;
   // }
 
-  async clipMultiKills(selectedMultiKills: any) {
-    for (const multiKill of selectedMultiKills) {
-      const match = this.multiKillMatches[multiKill.matchIndex];
-      this.updateRole(match, multiKill);
-      await this.createMultiKillClip(match, multiKill.killIndex);
-    }
-  }
+  // async clipMultiKills(selectedMultiKills: any) {
+  //   for (const multiKill of selectedMultiKills) {
+  //     const match = this.multiKillMatches[multiKill.matchIndex];
+  //     this.updateRole(match, multiKill);
+  //     await this.createMultiKillClip(match, multiKill.killIndex);
+  //   }
+  // }
 
-  updateRole(match: any, multiKill: any) {
-    const selectedRole = multiKill.role;
-    match.role = selectedRole;
-  }
+  // updateRole(match: any, multiKill: any) {
+  //   const selectedRole = multiKill.role;
+  //   match.role = selectedRole;
+  // }
 
-  async createMultiKillClip(MultiKillMatch: any, indexOfKill: any) {
+  static async createMultiKillClip(
+    multiKillMatch: MultiKillMatch,
+    multiKill: MultiKill,
+  ) {
     const highlightsFolderPath = await LeagueClient.getHighlightsFolderPath();
     const replay = new Replay();
-    this.replay = replay;
-    await LeagueClient.enableWindowMode();
-    await LeagueClient.launchReplay(MultiKillMatch.matchId);
-    await replay.load(10, 5); // Add global vars
+    // await LeagueClient.enableWindowMode(); // still needed ?
+    await LeagueClient.launchReplay(multiKillMatch.matchId);
+    await replay.load(10, 10); // Add global vars
     await replay.init();
     const clip = new MultiKillClip(
       replay,
-      MultiKillMatch,
-      indexOfKill,
+      multiKillMatch,
+      multiKill,
       highlightsFolderPath,
     );
     await clip.createClip();

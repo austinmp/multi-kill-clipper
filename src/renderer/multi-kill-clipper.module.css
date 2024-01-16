@@ -1,29 +1,109 @@
+@font-face {
+  font-family: 'Lato-Bold';
+  src: url('../../assets/fonts/Lato-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Lato-Regular';
+  src: url('../../assets/fonts/Lato-Regular.ttf');
+}
+
+:root {
+  --primary-color: linear-gradient(110.6deg, rgb(112, 32, 240) 2.2%, rgb(121, 29, 219) 100.2%);
+  --secondary-color: #F5F5F5;
+  --secondary-gradient: linear-gradient(to bottom right, #C973FF, #AEBAF8);
+  --default-font-family: 'Lato-Regular';
+  --default-bold-font-family: 'Lato-Bold';
+  --header-height: 7vh;
+}
+
+.codeBlock {
+  background-color: var(--secondary-color);
+  padding: 5px;
+  width: 50%;
+}
+
 .ctn {
   /* Primary container/background for entire app */
   width: 100vw;
   height: 100vh;
-  /* background: linear-gradient(to right,#8021f3, #693bf5,  #557bf6); */
   background-repeat: no-repeat;
   background-attachment: fixed;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+.tableHeader th {
+  /* background-color: var(--secondary-gradient); */
+  background: var(--secondary-color);
+  height: var(--header-height);
+  font-family: var(--default-bold-font-family);
+}
 
-.search-box {
-  /* background-color: green; */
-  height: 20vh;
-  width: 100vw;
+.clip-controls-ctn {
+  height: var(--header-height);
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  justify-content: center;
+  align-self: flex-end;
+  gap: 10px;
+  background: var(--secondary-color);
+
 }
 
 
-.hero-ctn {
-  /* background-color: red; */
+.summoner-search-ctn {
   display: flex;
   justify-content: center;
-  flex-grow: 1;
-  /* padding-top: 5vh; */
+  gap: 10px;
+  padding: 30px;
+  flex-wrap: wrap;
+}
+
+.multi-kill-table-ctn {
+  width: '100vw';
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  min-height: 7vh;
+  width: 100vw;
+  justify-content: space-between;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  flex-wrap: wrap;
+  background: var(--primary-color);
+  color: white;
+}
+
+
+.body {
+  margin-top: var(--header-height);
+  margin-bottom: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5vh;
+  font-family: var(--default-font-family);
+  height: 100%;
+
+}
+
+.logo-ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Lato-Bold';
+  font-size: 24px;
+}
+
+.gwen-ctn {
+  width: auto;
+  height: 50px;
 }
 
 .kill-select-ctn {
@@ -37,14 +117,129 @@
 }
 
 .logged-in-summoner-ctn {
-  /* background-color: red; */
-  width: 100%;
-  height: 10vh;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
 }
 
 .logged-in-summoner {
-  margin-top: 10px;
-  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summoner-name {
+  font-family: 'Lato-Bold';
+}
+
+.flex-row-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 8px;
+  width: 100%;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.kill-tag {
+  margin-bottom: 8px;
+}
+
+
+.loading-status-ctn {
+  /* background-color: #e84057; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.topBar {
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  position: sticky;
+  z-index: 100;
+  width: 100%;
+}
+
+.topBarAlertBanner {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.bannerContent {
+  background-color: red;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.clipStatusCtn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  width: 90vw;
+}
+
+.footer {
+  bottom: 0;
+  display: flex;
+  background: var(--primary-color);
+  justify-content: center;
+  font-size: 12px;
+}
+
+.disclaimer {
+  display: flex;
+  color: white;
+  font-family: 'Lato-Regular';
+  justify-content: center;
+  text-align: center;
+  width: 60%;
+  font-style: italic;
+}
+
+.customList {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.listItem {
+  display: list-item;
+  margin-bottom: 10px;
+  color: black;
+  list-style-type: disc;
+}
+
+
+.defeat {
+  /* background-color: #c14b5b; */
+  color: #e84057;
+}
+
+.victory {
+  color: #5383e8;
 }

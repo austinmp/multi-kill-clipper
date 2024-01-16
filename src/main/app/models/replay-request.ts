@@ -58,19 +58,13 @@ class RequestOptions {
   constructor(method: any, headers: any, body: any) {
     this.method = method; // GET or POST
     this.headers = headers;
-    this.agent = new https.Agent({ rejectUnauthorized: false });
+    this.agent = new https.Agent({
+      rejectUnauthorized: false,
+      requestCert: true,
+    });
     this.body =
       method.toLowerCase() === 'get' ? undefined : JSON.stringify(body);
   }
-
-  // setHeaders(headers: any) {
-  //   const myHeaders = new fetch.Headers();
-  //   myHeaders.append('Content-Type', 'application/json');
-  //   for (const key in headers) {
-  //     myHeaders.append(key, headers[key]);
-  //   }
-  //   return myHeaders;
-  // }
 }
 
 export { makeRequest };

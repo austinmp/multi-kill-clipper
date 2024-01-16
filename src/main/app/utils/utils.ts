@@ -62,6 +62,13 @@ const getRiotId = (summonerName: any, tagline: any) => {
   return `${summonerName}${tagline}`;
 };
 
+/*
+  Replace forward slashes in file path with back slashes
+*/
+const convertFilePath = (path: string) => {
+  return path.replace(/\//g, '\\');
+};
+
 export {
   sleep,
   sleepInSeconds,
@@ -74,4 +81,5 @@ export {
   isMatchOnCurrentPatch,
   truncatePatchVersion,
   getRiotId,
+  convertFilePath,
 };

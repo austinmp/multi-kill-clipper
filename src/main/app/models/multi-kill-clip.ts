@@ -3,16 +3,18 @@ import EventService from './event-service';
 import {
   TIME_TO_CLIP_AFTER_KILL,
   TIME_TO_CLIP_BEFORE_KILL,
+  EVENT_SERVICE_CHANNEL,
 } from '../constants';
+
+import MultiKill from './multi-kill';
+import MultiKillMatch from './multi-kill-match';
 
 class MultiKillClip {
   replay: any;
 
-  MultiKillMatch: any;
+  multiKillMatch: MultiKillMatch;
 
-  kill: any;
-
-  indexOfKill: any;
+  multiKill: MultiKill;
 
   format: string;
 
@@ -20,30 +22,26 @@ class MultiKillClip {
 
   constructor(
     replay: any,
-    MultiKillMatch: any,
-    indexOfKill: any,
+    multiKillMatch: MultiKillMatch,
+    multiKill: MultiKill,
     filePath: string,
   ) {
     this.replay = replay;
-    this.MultiKillMatch = MultiKillMatch;
-    this.kill = MultiKillMatch.multiKills[indexOfKill];
-    this.indexOfKill = indexOfKill;
+    this.multiKillMatch = multiKillMatch;
+    this.multiKill = multiKill;
     this.format = 'webm';
     this.filePath = filePath + this.getClipName();
   }
 
   getClipName() {
-    const { summonerName } = this.MultiKillMatch;
-    const { championName } = this.MultiKillMatch;
-    const nameOfKill = this.kill.type;
-    const { matchDate } = this.MultiKillMatch;
-    const killIndex = this.indexOfKill + 1;
-    return `/${summonerName}-${championName}-${nameOfKill}-${matchDate}(${killIndex}).${this.format}`;
+    const { summonerName, championName, matchDate } = this.multiKillMatch;
+    const nameOfKill = this.multiKill.type;
+    return `/${matchDate}-${summonerName}-${championName}-${nameOfKill}.${this.format}`;
   }
 
   async createClip() {
-    const startTime = this.kill.start - TIME_TO_CLIP_BEFORE_KILL;
-    const endTime = this.kill.end + TIME_TO_CLIP_AFTER_KILL;
+    const startTime = this.multiKill.start - TIME_TO_CLIP_BEFORE_KILL;
+    const endTime = this.multiKill.end + TIME_TO_CLIP_AFTER_KILL;
     const waitTime = endTime - startTime;
     await this.setRecordingProperties(startTime, endTime, false); // make sure we arent recording
     await this.setRenderProperties();
@@ -52,15 +50,21 @@ class MultiKillClip {
     await sleepInSeconds(2);
     await this.setRecordingProperties(startTime, endTime, true);
     await this.waitForRecordingToFinish(waitTime);
-    EventService.publish('clipProgress', `Clip recorded succcessfully...`);
-    EventService.publish('renderingComplete', this.filePath);
+    EventService.publish(
+      EVENT_SERVICE_CHANNEL.CLIP_PROGRESS,
+      `Clip recorded succcessfully...`,
+    );
+    EventService.publish(
+      EVENT_SERVICE_CHANNEL.CLIPPING_COMPLETE,
+      this.filePath,
+    );
   }
 
   async setRenderProperties() {
     const options = {
       interfaceTimeline: false,
       cameraAttached: true, // cameraAttatched setting only works when cameraMode=fps
-      selectionName: this.MultiKillMatch.summonerName,
+      selectionName: this.multiKillMatch.summonerName,
       cameraMode: 'fps',
       selectionOffset: {
         x: 0.0,

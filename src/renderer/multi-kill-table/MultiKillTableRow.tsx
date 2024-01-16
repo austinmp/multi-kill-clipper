@@ -1,40 +1,61 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Checkbox from '@mui/material/Checkbox';
-import MultiKillMatch from '../main/app/models/multi-kill-match';
-import MultiKill from '../main/app/models/multi-kill';
+import Chip from '@mui/material/Chip';
+import { useState } from 'react';
+import styles from '../multi-kill-clipper.module.css';
+import MultiKill from '../../main/app/models/multi-kill';
+import MultiKillMatch from '../../main/app/models/multi-kill-match';
+import KillTagCell from './KillTagCell';
 
-type MultiKillTableProps = {
-  multiKillMatches: any;
-  // MultiKillMatch[];
-};
-
-function Row(props: {
+type MultiKillTableRowProps = {
   row: MultiKillMatch;
   selectedMultiKill: MultiKill | null;
-  setSelectedMultiKill: (multiKill: MultiKill) => null;
-}) {
-  const { row, selectedMultiKill, setSelectedMultiKill } = props;
-  const [open, setOpen] = React.useState(false);
+  handleMultiKillSelect: (
+    multiKillMatch: MultiKillMatch,
+    multiKill: MultiKill,
+  ) => void;
+};
+
+export default function MultiKillTableRow({
+  row,
+  selectedMultiKill,
+  handleMultiKillSelect,
+}: MultiKillTableRowProps) {
+  const [open, setOpen] = useState(false);
 
   const isSelected = (multiKill: MultiKill) =>
     selectedMultiKill?.id === multiKill.id;
 
+  const multiKillTypes: string[] = [];
+  row.multiKills.forEach((multiKill: MultiKill) => {
+    if (!multiKillTypes.includes(multiKill.type)) {
+      multiKillTypes.push(multiKill.type);
+    }
+  });
+
+  const matchResultClass = row.win ? styles.victory : styles.defeat;
   return (
     <>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow
+        className={row.win ? styles.victory : styles.defeat}
+        sx={{
+          '& > *': { borderBottom: 'unset' },
+          '&:hover': {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+        onClick={() => setOpen(!open)}
+      >
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -45,10 +66,16 @@ function Row(props: {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row" align="left">
-          {row.queueType}
+          <div className={matchResultClass}>
+            <b> {row.win ? 'Victory' : 'Defeat'}</b>
+          </div>
         </TableCell>
         <TableCell component="th" scope="row" align="left">
-          {row.role}{' '}
+          {row.queueType}
+        </TableCell>
+        <KillTagCell multiKillTypes={multiKillTypes} />
+        <TableCell component="th" scope="row" align="left">
+          {row.role}
         </TableCell>
         <TableCell align="left">{row.championName}</TableCell>
         <TableCell align="left">{`${row.kills} / ${row.deaths} / ${row.assists}`}</TableCell>
@@ -73,9 +100,7 @@ function Row(props: {
                   {row.multiKills.map((multiKill: MultiKill) => (
                     <TableRow
                       hover
-                      onClick={(event) =>
-                        setSelectedMultiKill(multiKill)
-                      }
+                      onClick={() => handleMultiKillSelect(row, multiKill)}
                       role="checkbox"
                       aria-checked={isSelected(multiKill)}
                       tabIndex={-1}
@@ -87,20 +112,12 @@ function Row(props: {
                         <Checkbox
                           color="primary"
                           checked={isSelected(multiKill)}
-                          // inputProps={{
-                          //   'aria-labelledby': l,
-                          // }}
                         />
                       </TableCell>
-                      {/* <TableRow key={`${row.matchId}-${multiKill.start}`}> */}
                       <TableCell component="th" scope="row">
-                        {multiKill.type}
+                        <Chip label={multiKill.type} color="error" />
                       </TableCell>
                       <TableCell>{multiKill.start}</TableCell>
-                      {/* <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell> */}
                     </TableRow>
                   ))}
                 </TableBody>
@@ -110,58 +127,5 @@ function Row(props: {
         </TableCell>
       </TableRow>
     </>
-  );
-}
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-//   createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-//   createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-// ];
-
-export default function MultiKillTable({
-  multiKillMatches,
-}: MultiKillTableProps) {
-  const [selectedMultiKill, setSelectedMultiKill] =
-    React.useState<MultiKill | null>(null);
-
-  const handleMultiKillSelect = (multiKill: MultiKill) => {
-    if (selectedMultiKill?.id === multiKill.id) {
-      // deselect if currently selected
-      setSelectedMultiKill(null);
-    } else {
-      setSelectedMultiKill(multiKill);
-    }
-  };
-
-  return (
-    <Paper sx={{ width: '100%' }}>
-      <TableContainer sx={{ maxHeight: 600 }}>
-        <Table stickyHeader aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>Queue Type</TableCell>
-              <TableCell align="left">Role</TableCell>
-              <TableCell align="left">Champion</TableCell>
-              <TableCell align="left">K/D/A</TableCell>
-              <TableCell align="left">Date</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {multiKillMatches.map((multiKillMatch: MultiKillMatch) => (
-              <Row
-                key={multiKillMatch.matchId}
-                row={multiKillMatch}
-                selectedMultiKill={selectedMultiKill}
-                setSelectedMultiKill={handleMultiKillSelect}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
   );
 }

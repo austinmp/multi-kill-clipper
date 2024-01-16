@@ -95,7 +95,8 @@ class LeagueClient {
   async launchReplay(matchId: any) {
     await this.downloadReplay(matchId);
     EventService.publish('clipProgress', 'Launching replay...');
-    await makeRequest('POST', `/lol-replays/v1/rofls/${matchId}/watch`);
+    const resp = await makeRequest('POST', `/lol-replays/v1/rofls/${matchId}/watch`);
+    console.log("watch replay resp " , resp)
   }
 
   /// MATCH REQUESTS ///

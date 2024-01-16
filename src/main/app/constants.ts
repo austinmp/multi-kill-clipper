@@ -39,11 +39,16 @@ type MultiKillTypes = {
 };
 
 const MULTI_KILLS: Record<number, MultiKillTypes> = {
-  1: { singular: 'FirstBlood', plural: 'firstBloodKill' },
-  2: { singular: 'DoubleKill', plural: 'doubleKills' },
-  3: { singular: 'TripleKill', plural: 'tripleKills' },
-  4: { singular: 'QuadraKill', plural: 'quadraKills' },
-  5: { singular: 'PentaKill', plural: 'pentaKills' },
+  1: { singular: 'First Blood', plural: 'firstBloodKill' },
+  2: { singular: 'Double Kill', plural: 'doubleKills' },
+  3: { singular: 'Triple Kill', plural: 'tripleKills' },
+  4: { singular: 'Quadra Kill', plural: 'quadraKills' },
+  5: { singular: 'Penta Kill', plural: 'pentaKills' },
+};
+
+export const EVENT_SERVICE_CHANNEL = {
+  CLIP_PROGRESS: 'clipProgress',
+  CLIPPING_COMPLETE: 'clippingComplete',
 };
 
 export {

@@ -18,7 +18,7 @@ class Replay {
       const pid = await this.getProcessId();
       this.setProcessId(pid);
     } catch (error) {
-      console.log(error);
+      console.error(error)
     }
   }
 
@@ -27,9 +27,12 @@ class Replay {
   }
 
   async getProcessId() {
-    if (!this.pid === undefined) return this.pid;
+    if (this.pid) return this.pid;
     const replayData = await makeRequest('GET', `${this.url}/replay/game`);
-    return replayData.processID;
+    if (replayData?.processID) {
+      this.pid = replayData.processID;
+    }
+    return this.pid;
   }
 
   async exit() {
@@ -75,7 +78,7 @@ class Replay {
     return await makeRequest('POST', `${this.url}/replay/render`, {}, options);
   }
 
-  async load(timeout: any, numRetries: any) {
+  async load(timeout: number, numRetries: number) {
     let responseReceived = false;
     do {
       try {

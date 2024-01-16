@@ -14,8 +14,12 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import LeagueClient from './app/apis/league-client';
-import MultiKillClipperMain from './app/controllers/MultiKillClipperMain';
+import EventService from './app/models/event-service';
+import { EVENT_SERVICE_CHANNEL } from './app/constants';
+import IPC_CHANNEL_TO_HANDLER from './ipc/ipc-channel-to-handler';
+import IPC_CHANNEL from './ipc/ipc-channels';
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 class AppUpdater {
   constructor() {
@@ -26,48 +30,6 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
-
-ipcMain.handle('get-current-summoner', async (event: any) => {
-  try {
-    const response = await LeagueClient.getCurrentSummoner();
-    return response; // This will be sent back to the renderer process
-  } catch (error: any) {
-    console.error('Error getting current summoner:', error);
-    return { error: error.message }; // Send back error information if needed
-  }
-});
-
-ipcMain.handle(
-  'get-multi-kills',
-  async (
-    event: any,
-    summonerName,
-    multiKillTypes,
-    currentSummoner,
-    tagline,
-  ) => {
-    try {
-      const multiKillClipper = new MultiKillClipperMain(
-        summonerName,
-        multiKillTypes,
-        currentSummoner,
-        tagline,
-      );
-      const response = await multiKillClipper.getMultiKills();
-      console.log(response);
-      return response; // This will be sent back to the renderer process
-    } catch (error: any) {
-      console.error('Error getting current summoner:', error);
-      return { error: error.message }; // Send back error information if needed
-    }
-  },
-);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -111,7 +73,7 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
-    icon: getAssetPath('icon.png'),
+    icon: getAssetPath('gwen.png'),
     webPreferences: {
       contextIsolation: true,
       preload: app.isPackaged
@@ -155,6 +117,54 @@ const createWindow = async () => {
  * Add event listeners...
  */
 
+// Set up custom Multi Kill Clipper IPC handlers
+ipcMain.on(
+  IPC_CHANNEL.OPEN_FILE,
+  IPC_CHANNEL_TO_HANDLER[IPC_CHANNEL.OPEN_FILE],
+);
+
+ipcMain.handle(
+  IPC_CHANNEL.GET_MULTI_KILLS,
+  IPC_CHANNEL_TO_HANDLER[IPC_CHANNEL.GET_MULTI_KILLS],
+);
+
+ipcMain.handle(
+  IPC_CHANNEL.GET_HIGHLIGHTS_PATH,
+  IPC_CHANNEL_TO_HANDLER[IPC_CHANNEL.GET_HIGHLIGHTS_PATH],
+);
+ipcMain.handle(
+  IPC_CHANNEL.GET_LOGGED_IN_SUMMONER,
+  IPC_CHANNEL_TO_HANDLER[IPC_CHANNEL.GET_LOGGED_IN_SUMMONER],
+);
+ipcMain.handle(
+  IPC_CHANNEL.CREATE_CLIP,
+  IPC_CHANNEL_TO_HANDLER[IPC_CHANNEL.CREATE_CLIP],
+);
+
+const subscribeToMainProcessEvents = () => {
+  // Subscribe to backend events for clipping progress
+  EventService.subscribe(EVENT_SERVICE_CHANNEL.CLIP_PROGRESS, (data: any) => {
+    // When 'someEvent' occurs, send data to the renderer process
+    if (mainWindow) {
+      mainWindow.webContents.send(EVENT_SERVICE_CHANNEL.CLIP_PROGRESS, data);
+    }
+  });
+
+  // Subscribe to backend events for clipping complete
+  EventService.subscribe(
+    EVENT_SERVICE_CHANNEL.CLIPPING_COMPLETE,
+    (data: any) => {
+      // When 'someEvent' occurs, send data to the renderer process
+      if (mainWindow) {
+        mainWindow.webContents.send(
+          EVENT_SERVICE_CHANNEL.CLIPPING_COMPLETE,
+          data,
+        );
+      }
+    },
+  );
+};
+
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
@@ -167,6 +177,7 @@ app
   .whenReady()
   .then(() => {
     createWindow();
+    subscribeToMainProcessEvents();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
