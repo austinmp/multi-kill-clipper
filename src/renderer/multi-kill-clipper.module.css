@@ -14,60 +14,26 @@
   --secondary-gradient: linear-gradient(to bottom right, #C973FF, #AEBAF8);
   --default-font-family: 'Lato-Regular';
   --default-bold-font-family: 'Lato-Bold';
+  --default-table-row-height: 75px;
   --header-height: 7vh;
 }
 
-.codeBlock {
-  background-color: var(--secondary-color);
-  padding: 5px;
-  width: 50%;
-}
-
-.ctn {
-  /* Primary container/background for entire app */
-  width: 100vw;
-  height: 100vh;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  overflow-y: auto;
+/*Wraps entire app */
+.container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-
-.tableHeader th {
-  /* background-color: var(--secondary-gradient); */
-  background: var(--secondary-color);
-  height: var(--header-height);
-  font-family: var(--default-bold-font-family);
-}
-
-.clip-controls-ctn {
-  height: var(--header-height);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  align-self: flex-end;
-  gap: 10px;
-  background: var(--secondary-color);
-
-}
-
-
-.summoner-search-ctn {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  padding: 30px;
-  flex-wrap: wrap;
-}
-
-.multi-kill-table-ctn {
-  width: '100vw';
+  height: 100vh;
+  width: 100vw;
 }
 
 .header {
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.headerInner {
   display: flex;
   flex-direction: row;
   min-height: 7vh;
@@ -80,17 +46,80 @@
   color: white;
 }
 
+.footer {
+  background: var(--primary-color);
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.disclaimer {
+  display: flex;
+  color: white;
+  justify-content: center;
+  text-align: center;
+  width: 60%;
+  height: auto;
+  font-size: 10px;
+  font-style: italic;
+  flex-grow: 0.5;
+}
 
 .body {
-  margin-top: var(--header-height);
-  margin-bottom: 5vh;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.bodyInner {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-items: center;
   row-gap: 5vh;
-  font-family: var(--default-font-family);
-  height: 100%;
+}
 
+.codeBlock {
+  background-color: var(--secondary-color);
+  padding: 5px;
+  width: 50%;
+}
+
+.tableHeader th {
+  background: var(--secondary-color);
+  height: var(--header-height);
+  font-weight: bold;
+}
+
+.clip-controls-ctn {
+  min-height: var(--header-height);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+  gap: 10px;
+  padding: 10px;
+  background: var(--secondary-color);
+}
+
+.summoner-search-ctn {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 30px;
+  flex-wrap: wrap;
+}
+
+.multi-kill-table-ctn {
+  width: '100vw';
 }
 
 .logo-ctn {
@@ -131,17 +160,16 @@
 }
 
 .summoner-name {
-  font-family: 'Lato-Bold';
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .flex-row-center {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  /* width: 100%; */
 }
-
-
 
 .flex-col {
   display: flex;
@@ -156,12 +184,10 @@
 }
 
 .kill-tag {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-
 .loading-status-ctn {
-  /* background-color: #e84057; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -174,7 +200,7 @@
   flex-direction: column;
   top: 0;
   position: sticky;
-  z-index: 100;
+  z-index: 1;
   width: 100%;
 }
 
@@ -186,7 +212,6 @@
 }
 
 .bannerContent {
-  background-color: red;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -204,23 +229,9 @@
   width: 90vw;
 }
 
-.footer {
-  bottom: 0;
-  display: flex;
-  background: var(--primary-color);
-  justify-content: center;
-  font-size: 12px;
-}
 
-.disclaimer {
-  display: flex;
-  color: white;
-  font-family: 'Lato-Regular';
-  justify-content: center;
-  text-align: center;
-  width: 60%;
-  font-style: italic;
-}
+
+
 
 .customList {
   list-style-type: disc;
@@ -242,4 +253,33 @@
 
 .victory {
   color: #5383e8;
+}
+
+.matchInfoCellCtn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.matchInfoCell {
+  /* height: var(--default-table-row-height); */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: #C973FF; */
+}
+
+
+.multiKillTableMainRow {
+  height: var(--default-table-row-height);
+  /* background-color: red; */
+}
+
+.multiKillTableMainRow:hover {
+  background-color: var(--secondary-color);
+}
+
+.multiKillTableMainRow>* {
+  border-bottom: unset;
 }

@@ -1,3 +1,5 @@
+export const VICTORY_CSS_CLASS = 'victory';
+export const DEFEAT_CSS_CLASS = 'defeat';
 
 // Mapping for front end to back end multi kill types
 export const MULTI_KILL_MENU_OPTION_TO_MULTI_KILL_TYPE = {

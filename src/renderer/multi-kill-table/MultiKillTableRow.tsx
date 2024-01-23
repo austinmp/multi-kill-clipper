@@ -16,6 +16,8 @@ import styles from '../multi-kill-clipper.module.css';
 import MultiKill from '../../main/app/models/multi-kill';
 import MultiKillMatch from '../../main/app/models/multi-kill-match';
 import KillTagCell from './KillTagCell';
+import MatchInfoCell from './MatchInfoCell';
+import { MULTI_KILLS } from '../../main/app/constants';
 
 type MultiKillTableRowProps = {
   row: MultiKillMatch;
@@ -36,27 +38,38 @@ export default function MultiKillTableRow({
   const isSelected = (multiKill: MultiKill) =>
     selectedMultiKill?.id === multiKill.id;
 
-  const multiKillTypes: string[] = [];
+  /*
+    Sort the multi kill types in ascending order (First Blood, Double, Triple, Quadra, Penta)
+  */
+  const getSortedMultiKillTypes = (multiKillTypes: string[]): string[] => {
+    const sorted: string[] = [];
+    Object.values(MULTI_KILLS).forEach((value) => {
+      if (multiKillTypes.includes(value.singular)) {
+        sorted.push(value.singular);
+      }
+    });
+    return sorted;
+  };
+
+  /*
+    Get all distinct multi kill types
+  */
+  let multiKillTypes: string[] = [];
   row.multiKills.forEach((multiKill: MultiKill) => {
     if (!multiKillTypes.includes(multiKill.type)) {
       multiKillTypes.push(multiKill.type);
     }
   });
 
-  const matchResultClass = row.win ? styles.victory : styles.defeat;
+  multiKillTypes = getSortedMultiKillTypes(multiKillTypes);
+
   return (
     <>
       <TableRow
-        className={row.win ? styles.victory : styles.defeat}
-        sx={{
-          '& > *': { borderBottom: 'unset' },
-          '&:hover': {
-            backgroundColor: '#f5f5f5',
-          },
-        }}
+        className={styles.multiKillTableMainRow}
         onClick={() => setOpen(!open)}
       >
-        <TableCell>
+        <TableCell align="left">
           <IconButton
             aria-label="expand row"
             size="small"
@@ -65,20 +78,13 @@ export default function MultiKillTableRow({
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row" align="left">
-          <div className={matchResultClass}>
-            <b> {row.win ? 'Victory' : 'Defeat'}</b>
-          </div>
-        </TableCell>
-        <TableCell component="th" scope="row" align="left">
-          {row.queueType}
-        </TableCell>
         <KillTagCell multiKillTypes={multiKillTypes} />
-        <TableCell component="th" scope="row" align="left">
-          {row.role}
-        </TableCell>
+        <MatchInfoCell multiKillMatch={row} />
+        <TableCell align="left">{row.role}</TableCell>
         <TableCell align="left">{row.championName}</TableCell>
-        <TableCell align="left">{`${row.kills} / ${row.deaths} / ${row.assists}`}</TableCell>
+        <TableCell align="left">
+          {`${row.kills} / ${row.deaths} / ${row.assists}`}
+        </TableCell>
         <TableCell align="left">{row.matchDate}</TableCell>
       </TableRow>
       <TableRow>
@@ -115,7 +121,11 @@ export default function MultiKillTableRow({
                         />
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        <Chip label={multiKill.type} color="error" />
+                        <Chip
+                          label={multiKill.type}
+                          color="error"
+                          size="small"
+                        />
                       </TableCell>
                       <TableCell>{multiKill.start}</TableCell>
                     </TableRow>

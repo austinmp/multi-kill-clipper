@@ -11,7 +11,7 @@ import styles from './multi-kill-clipper.module.css';
 export default function AppTutorial() {
   return (
     <Section>
-      <Accordion defaultExpanded>
+      <Accordion>
         <AccordionSummary
           expandIcon={<ArrowDownwardIcon />}
           aria-controls="panel1-content"

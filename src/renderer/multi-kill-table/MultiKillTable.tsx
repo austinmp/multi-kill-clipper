@@ -8,26 +8,13 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Checkbox from '@mui/material/Checkbox';
-import ContentCutIcon from '@mui/icons-material/ContentCut';
-import CancelIcon from '@mui/icons-material/Cancel';
-import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
-import { TableFooter } from '@mui/material';
 import styles from '../multi-kill-clipper.module.css';
 import MultiKill from '../../main/app/models/multi-kill';
 import MultiKillMatch from '../../main/app/models/multi-kill-match';
-import KillTagCell from './KillTagCell';
 import MultiKillTableRow from './MultiKillTableRow';
-import ClipControls from '../clip-controls/ClipControls';
 
 type MultiKillTableProps = {
   multiKillMatches: MultiKillMatch[] | null;
-  selectedMultiKillMatch: MultiKillMatch | null;
   selectedMultiKill: MultiKill | null;
   setSelectedMultiKillMatch: (multiKillMatch: MultiKillMatch | null) => void;
   setSelectedMultiKill: (multiKill: MultiKill | null) => void;
@@ -35,7 +22,6 @@ type MultiKillTableProps = {
 
 export default function MultiKillTable({
   multiKillMatches,
-  selectedMultiKillMatch,
   selectedMultiKill,
   setSelectedMultiKillMatch,
   setSelectedMultiKill,
@@ -59,9 +45,8 @@ export default function MultiKillTable({
         <TableHead>
           <TableRow className={styles.tableHeader}>
             <TableCell />
-            <TableCell align="left">Match Result</TableCell>
-            <TableCell align="left">Queue Type</TableCell>
-            <TableCell align="left">Multi Kills</TableCell>
+            <TableCell align="center">Multi Kill(s)</TableCell>
+            <TableCell align="center">Match Result</TableCell>
             <TableCell align="left">Role</TableCell>
             <TableCell align="left">Champion</TableCell>
             <TableCell align="left">K/D/A</TableCell>
