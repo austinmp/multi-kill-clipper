@@ -160,7 +160,7 @@
 }
 
 .summoner-name {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -231,8 +231,6 @@
 
 
 
-
-
 .customList {
   list-style-type: disc;
   margin-left: 20px;
@@ -273,7 +271,7 @@
 
 .multiKillTableMainRow {
   height: var(--default-table-row-height);
-  /* background-color: red; */
+  border-bottom: unset;
 }
 
 .multiKillTableMainRow:hover {
@@ -282,4 +280,23 @@
 
 .multiKillTableMainRow>* {
   border-bottom: unset;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinAnimation {
+  animation: spin 0.5s linear 1;
+}
+
+.refreshBtn {
+  color: white;
+  background-color: transparent;
 }

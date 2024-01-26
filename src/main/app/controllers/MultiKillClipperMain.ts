@@ -49,7 +49,7 @@ class MultiKillClipperMain {
     }
 
     const multiKillMatches = await this.getAllMultiKillMatchesOnCurrentPatch();
-    if (!multiKillMatches) {
+    if (!multiKillMatches.length) {
       throw new CustomError(
         `No multi-kill matches of the selected type were found on the current patch (${this.patch}).`,
       );
@@ -61,6 +61,7 @@ class MultiKillClipperMain {
   async getAllMultiKillMatchesOnCurrentPatch(): Promise<MultiKillMatch[]> {
     const rawPatch = await LeagueClient.getPatchVersion();
     const currentPatch = truncatePatchVersion(rawPatch);
+    this.patch = currentPatch;
     const matchesOnCurrentPatch = [];
     const isSearchingSelf =
       getRiotId(

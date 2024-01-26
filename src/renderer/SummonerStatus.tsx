@@ -1,6 +1,6 @@
+import { Typography } from '@mui/material';
 import styles from './multi-kill-clipper.module.css';
 import Summoner from '../main/app/models/summoner';
-import { Typography } from '@mui/material';
 
 type SummonerStatusProps = {
   loggedInSummoner: Summoner | null;
@@ -19,9 +19,9 @@ export default function SummonerStatus({
       <div className={styles['logged-in-summoner']}>
         {loggedInSummoner && !isLoggedInSummonerLoading && (
           <>
-            <Typography variant="h6" className={styles['summoner-name']}>
-              {` ⚔️ ${loggedInSummoner.summonerName}`}
-            </Typography>
+            <div className={styles['summoner-name']}>
+              {`⚔️ ${loggedInSummoner.summonerName}`}
+            </div>
             <div>{`🟢 Connected - #${loggedInSummoner.tagline}`}</div>
           </>
         )}

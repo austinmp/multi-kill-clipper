@@ -25,6 +25,7 @@ export default function MultiKillClipper() {
     if (!response.error) {
       setLoggedInSummoner(response);
     } else {
+      setLoggedInSummoner(null);
       showDialog(
         'Failed To Connect',
         `${response.error}. Please make sure your League Client is running, then press F5 to refresh this app.`,
@@ -43,6 +44,7 @@ export default function MultiKillClipper() {
         className={styles.header}
         loggedInSummoner={loggedInSummoner}
         isLoggedInSummonerLoading={isLoggedInSummonerLoading}
+        fetchSummoner={fetchSummoner}
       />
       <Body
         className={styles.body}

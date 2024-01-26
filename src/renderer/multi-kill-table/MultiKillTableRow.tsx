@@ -6,18 +6,17 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
-import { useState } from 'react';
 import styles from '../multi-kill-clipper.module.css';
 import MultiKill from '../../main/app/models/multi-kill';
 import MultiKillMatch from '../../main/app/models/multi-kill-match';
 import KillTagCell from './KillTagCell';
 import MatchInfoCell from './MatchInfoCell';
 import { MULTI_KILLS } from '../../main/app/constants';
+import { convertSecondsToHMS } from '../../main/app/utils/utils';
 
 type MultiKillTableRowProps = {
   row: MultiKillMatch;
@@ -33,11 +32,10 @@ export default function MultiKillTableRow({
   selectedMultiKill,
   handleMultiKillSelect,
 }: MultiKillTableRowProps) {
-  const [open, setOpen] = useState(false);
-
   const isSelected = (multiKill: MultiKill) =>
     selectedMultiKill?.id === multiKill.id;
 
+  const [open, setOpen] = useState(false);
   /*
     Sort the multi kill types in ascending order (First Blood, Double, Triple, Quadra, Penta)
   */
@@ -66,6 +64,7 @@ export default function MultiKillTableRow({
   return (
     <>
       <TableRow
+        sx={{ '& > *': { borderBottom: 'unset' } }}
         className={styles.multiKillTableMainRow}
         onClick={() => setOpen(!open)}
       >
@@ -73,7 +72,10 @@ export default function MultiKillTableRow({
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={(event) => {
+              event.stopPropagation(); // Prevent the row from also triggering the onRowOpen
+              setOpen(!open);
+            }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -87,55 +89,71 @@ export default function MultiKillTableRow({
         </TableCell>
         <TableCell align="left">{row.matchDate}</TableCell>
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Multi Kills
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell />
-                    <TableCell>Multi Kill Type</TableCell>
-                    <TableCell>Timestamp</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.multiKills.map((multiKill: MultiKill) => (
-                    <TableRow
-                      hover
-                      onClick={() => handleMultiKillSelect(row, multiKill)}
-                      role="checkbox"
-                      aria-checked={isSelected(multiKill)}
-                      tabIndex={-1}
-                      key={`${multiKill.id}`}
-                      selected={isSelected(multiKill)}
-                      sx={{ cursor: 'pointer' }}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isSelected(multiKill)}
-                        />
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <Chip
-                          label={multiKill.type}
-                          color="error"
-                          size="small"
-                        />
-                      </TableCell>
-                      <TableCell>{multiKill.start}</TableCell>
+      {/* Expanded Row View */}
+      {open && (
+        <TableRow>
+          <TableCell
+            style={{ borderBottom: 'unset', padding: 0 }}
+            colSpan={4}
+          />{' '}
+          {/* Placeholder cells */}
+          <TableCell
+            style={{ paddingBottom: 0, paddingTop: 0, borderBottom: 'unset' }}
+            colSpan={3}
+          >
+            <Collapse
+              in={open}
+              timeout={{ enter: 2000, exit: 500 }}
+              unmountOnExit
+            >
+              <Box sx={{ margin: 1 }}>
+                <Table size="small" aria-label="details">
+                  <TableHead>
+                    <TableRow>
+                      {/* Adjust column headers if needed */}
+                      <TableCell align="right" />
+                      {/* Placeholder for the checkbox column */}
+                      <TableCell align="right">Multi Kill Type</TableCell>
+                      <TableCell align="right">Timestamp</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {row.multiKills.map((multiKill: MultiKill) => (
+                      <TableRow
+                        hover
+                        onClick={() => handleMultiKillSelect(row, multiKill)}
+                        role="checkbox"
+                        aria-checked={isSelected(multiKill)}
+                        tabIndex={-1}
+                        key={`${multiKill.id}`}
+                        selected={isSelected(multiKill)}
+                        sx={{ cursor: 'pointer' }}
+                      >
+                        <TableCell padding="checkbox" align="right">
+                          <Checkbox
+                            color="primary"
+                            checked={isSelected(multiKill)}
+                          />
+                        </TableCell>
+                        <TableCell component="th" scope="row" align="right">
+                          <Chip
+                            label={multiKill.type}
+                            color="error"
+                            size="small"
+                          />
+                        </TableCell>
+                        <TableCell align="right">
+                          {convertSecondsToHMS(multiKill.start)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      )}
     </>
   );
 }

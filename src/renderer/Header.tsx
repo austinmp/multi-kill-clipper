@@ -3,17 +3,20 @@ import styles from './multi-kill-clipper.module.css';
 import gwen from '../../assets/gwen.png';
 import LoggedInSummoner from './SummonerStatus';
 import Summoner from '../main/app/models/summoner';
+import RefreshButton from './common/RefreshButton';
 
 type HeaderProps = {
   className?: string;
   loggedInSummoner: Summoner | null;
   isLoggedInSummonerLoading: boolean;
+  fetchSummoner: () => Promise<void>;
 };
 
 export default function Header({
   className,
   loggedInSummoner,
   isLoggedInSummonerLoading,
+  fetchSummoner,
 }: HeaderProps) {
   return (
     <Paper elevation={10} component="header" className={className} square>
@@ -22,10 +25,13 @@ export default function Header({
           <img className={styles['gwen-ctn']} src={gwen} alt="Gwen" />
           <div>Multi Kill Clipper</div>
         </div>
-        <LoggedInSummoner
-          loggedInSummoner={loggedInSummoner}
-          isLoggedInSummonerLoading={isLoggedInSummonerLoading}
-        />
+        <div className={styles['flex-row-center']}>
+          <LoggedInSummoner
+            loggedInSummoner={loggedInSummoner}
+            isLoggedInSummonerLoading={isLoggedInSummonerLoading}
+          />
+          <RefreshButton onClick={fetchSummoner} />
+        </div>
       </div>
     </Paper>
   );

@@ -16,6 +16,27 @@ function secondsToMillis(s: any) {
   return s * 1000;
 }
 
+/*
+    Format seconds in a nicely formatted string for front end display
+*/
+function convertSecondsToHMS(s: number): string {
+  // Round the seconds to the nearest whole number first
+  const seconds = Math.round(s);
+
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  const parts: string[] = [];
+  if (hours > 0) parts.push(`${hours}h`);
+  if (minutes > 0) parts.push(`${minutes}m`);
+  // Check if parts.length is 0 to ensure "0s" is returned for a 0 input
+  if (remainingSeconds > 0 || parts.length === 0)
+    parts.push(`${remainingSeconds}s`);
+
+  return parts.join(' ');
+}
+
 function secondsToMinutesFormatted(s: any) {
   let minutes = s / 60;
   const seconds = minutes - Math.floor(minutes);
@@ -44,18 +65,18 @@ function isEmpty(obj: any) {
   return Object.keys(obj).length === 0;
 }
 
-const isMatchOnCurrentPatch = (match: any, rawCurrentPatchData: any) => {
-  const rawMatchPatchData = match.gameVersion;
-  const matchPatch = truncatePatchVersion(rawMatchPatchData);
-  const currentPatch = truncatePatchVersion(rawCurrentPatchData);
-  return matchPatch == currentPatch;
-};
-
 const truncatePatchVersion = (rawPatchData: any) => {
   /* Shortens raw patch string to one decimal place (e.g. 11.7, 12.13, 10.9) */
   const tokens = rawPatchData.split('.');
   const patch = `${tokens[0]}.${tokens[1]}`;
   return patch;
+};
+
+const isMatchOnCurrentPatch = (match: any, rawCurrentPatchData: any) => {
+  const rawMatchPatchData = match.gameVersion;
+  const matchPatch = truncatePatchVersion(rawMatchPatchData);
+  const currentPatch = truncatePatchVersion(rawCurrentPatchData);
+  return matchPatch === currentPatch;
 };
 
 const getRiotId = (summonerName: any, tagline: any) => {
@@ -82,4 +103,5 @@ export {
   truncatePatchVersion,
   getRiotId,
   convertFilePath,
+  convertSecondsToHMS,
 };

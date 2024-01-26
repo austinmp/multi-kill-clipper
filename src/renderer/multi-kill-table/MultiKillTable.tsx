@@ -1,13 +1,10 @@
-import { useState, useEffect, FormEvent } from 'react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useState } from 'react';
 import styles from '../multi-kill-clipper.module.css';
 import MultiKill from '../../main/app/models/multi-kill';
 import MultiKillMatch from '../../main/app/models/multi-kill-match';
