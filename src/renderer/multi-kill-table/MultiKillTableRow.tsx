@@ -10,6 +10,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
+import { useState } from 'react';
 import styles from '../multi-kill-clipper.module.css';
 import MultiKill from '../../main/app/models/multi-kill';
 import MultiKillMatch from '../../main/app/models/multi-kill-match';
@@ -91,14 +92,10 @@ export default function MultiKillTableRow({
       </TableRow>
       {/* Expanded Row View */}
       {open && (
-        <TableRow>
+        <TableRow className={styles.multiKillTableExpandedRow}>
+          <TableCell colSpan={4} />
           <TableCell
-            style={{ borderBottom: 'unset', padding: 0 }}
-            colSpan={4}
-          />{' '}
-          {/* Placeholder cells */}
-          <TableCell
-            style={{ paddingBottom: 0, paddingTop: 0, borderBottom: 'unset' }}
+            className={styles.multiKillTableExpandedRowCell}
             colSpan={3}
           >
             <Collapse
@@ -110,11 +107,13 @@ export default function MultiKillTableRow({
                 <Table size="small" aria-label="details">
                   <TableHead>
                     <TableRow>
-                      {/* Adjust column headers if needed */}
                       <TableCell align="right" />
-                      {/* Placeholder for the checkbox column */}
-                      <TableCell align="right">Multi Kill Type</TableCell>
-                      <TableCell align="right">Timestamp</TableCell>
+                      <TableCell align="right">
+                        <b>Multi Kill Type</b>
+                      </TableCell>
+                      <TableCell align="right">
+                        <b>Timestamp</b>
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

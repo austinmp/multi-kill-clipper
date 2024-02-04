@@ -97,7 +97,7 @@ export default function Body({
     if (validateForm()) {
       setIsMatchesLoading(true);
       const multiKillTypes = formData.selectedKillTypes.map(
-        (selectedKill: str) =>
+        (selectedKill: string) =>
           MULTI_KILL_MENU_OPTION_TO_MULTI_KILL_TYPE[selectedKill],
       );
       const response = await window.electron.ipcRenderer.invoke(
@@ -136,7 +136,6 @@ export default function Body({
   };
 
   useEffect(() => {
-    // Example of using EventService for an internal event
     window.electron.ipcRenderer.on(
       EVENT_SERVICE_CHANNEL.CLIP_PROGRESS,
       handleClipProgressUpdate,
@@ -166,10 +165,11 @@ export default function Body({
       selectedMultiKillMatch,
       selectedMultiKill,
     );
-    if (response.error) {
+    if (response?.error) {
       showDialog('Clipping Failed', response.error);
     }
     setIsClippingInProgress(false);
+    setClipProgress(''); // clear status message
   };
 
   return (
@@ -190,8 +190,13 @@ export default function Body({
               message={loadingStatus.message}
             />
           </Collapse>
+          <Collapse in={isClippingInProgress} timeout={300}>
+            <LoadingStatus
+              isLoading={isClippingInProgress}
+              message={clipProgress}
+            />
+          </Collapse>
         </Section>
-        <ClipStatus isLoading={isClippingInProgress} message={clipProgress} />
         <Section>
           <MultiKillTable
             multiKillMatches={matches}

@@ -68,7 +68,6 @@ class LeagueClient {
   }
 
   async downloadReplay(matchId: any) {
-    EventService.publish('clipProgress', 'Initializing replay download...');
     await makeRequest('POST', `/lol-replays/v1/rofls/${matchId}/download`);
     return await this.waitForReplayDownloadToComplete(matchId);
   }

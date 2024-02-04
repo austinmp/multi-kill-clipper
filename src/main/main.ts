@@ -71,9 +71,9 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
-    icon: getAssetPath('gwen.png'),
+    width: 1366,
+    height: 768,
+    icon: getAssetPath('/icons/gwen-256x256.png'),
     webPreferences: {
       contextIsolation: true,
       preload: app.isPackaged

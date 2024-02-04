@@ -47,10 +47,11 @@ function secondsToMinutesFormatted(s: any) {
   return formattedTime;
 }
 
+/*
+  Returns a new datetime in YYYY-MM-DD format
+*/
 function formatDate(rawDate: any) {
-  const date = rawDate.slice(0, 10);
-  const tokens = date.split('-'); // Original format : 2021-05-23
-  return `${tokens[1]}-${tokens[2]}-${tokens[0]}`; // Returned format : 05-23-2021
+  return new Date(rawDate).toISOString().split('T')[0];
 }
 
 function spliceString(str: any, startIndex: any, endChar: any) {

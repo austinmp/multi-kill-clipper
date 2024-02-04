@@ -69,7 +69,7 @@ class MultiKillClip {
       selectionOffset: {
         x: 0.0,
         y: 1911.85,
-        z: -1200.0,
+        z: -1500.0,
       },
     };
     return this.replay.postRenderProperties(options);

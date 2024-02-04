@@ -26,6 +26,8 @@
   width: 100vw;
 }
 
+
+
 .header {
   text-align: center;
   position: sticky;
@@ -44,6 +46,14 @@
   flex-wrap: wrap;
   background: var(--primary-color);
   color: white;
+}
+
+/* Styles for smaller screens */
+@media screen and (max-width: 600px) {
+  .headerInner {
+    flex-direction: column;
+  }
+
 }
 
 .footer {
@@ -260,12 +270,10 @@
 }
 
 .matchInfoCell {
-  /* height: var(--default-table-row-height); */
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
-  /* background-color: #C973FF; */
 }
 
 
@@ -273,6 +281,18 @@
   height: var(--default-table-row-height);
   border-bottom: unset;
 }
+
+.multiKillTableExpandedRow {
+  border-bottom: unset;
+  padding: 0;
+}
+
+.multiKillTableExpandedRowCell {
+  padding-bottom: 0;
+  padding-top: 0;
+  border-bottom: 'unset';
+}
+
 
 .multiKillTableMainRow:hover {
   background-color: var(--secondary-color);

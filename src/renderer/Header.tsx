@@ -30,7 +30,9 @@ export default function Header({
             loggedInSummoner={loggedInSummoner}
             isLoggedInSummonerLoading={isLoggedInSummonerLoading}
           />
-          <RefreshButton onClick={fetchSummoner} />
+          {!isLoggedInSummonerLoading && (
+            <RefreshButton onClick={fetchSummoner} />
+          )}
         </div>
       </div>
     </Paper>

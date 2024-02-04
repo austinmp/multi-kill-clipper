@@ -136,56 +136,14 @@ class MultiKillClipperMain {
     return multiKillMatches;
   }
 
-  // async initializeMultiKillMatchObjects(
-  //   multiKillMatches: any,
-  //   multiKillTypes: any,
-  // ) {
-  //   const matchObjects = [];
-  //   for (const multiKillMatch of multiKillMatches) {
-  //     const match = new MultiKillMatch(multiKillMatch, multiKillTypes);
-  //     const matchTimeline = await LeagueClient.getMatchTimelineByMatchId(match.matchId,);
-  //     const endOfMatchData = await LeagueClient.getEndOfMatchDataByMatchId(match.matchId);
-  //     const participantId = match.getParticipantIdFromEndOfMatchData(
-  //       match.summonerName,
-  //       endOfMatchData,
-  //     );
-  //     const allKillsForParticipant = match.getParticipantKillsFromMatchTimeline(
-  //       matchTimeline,
-  //       participantId,
-  //     );
-  //     const multiKills = match.getMultiKillsFromAllMatchKills(
-  //       allKillsForParticipant,
-  //     );
-  //     // match.setChampionName();
-  //     // match.setParticipantRole(endOfMatchData, participantId);
-  //     // match.setParticipantTeamId(endOfMatchData, participantId);
-  //     match.participantId = participantId;
-  //     match.multiKills = multiKills;
-  //     matchObjects.push(match);
-  //   }
-  //   return matchObjects;
-  // }
-
-  // async clipMultiKills(selectedMultiKills: any) {
-  //   for (const multiKill of selectedMultiKills) {
-  //     const match = this.multiKillMatches[multiKill.matchIndex];
-  //     this.updateRole(match, multiKill);
-  //     await this.createMultiKillClip(match, multiKill.killIndex);
-  //   }
-  // }
-
-  // updateRole(match: any, multiKill: any) {
-  //   const selectedRole = multiKill.role;
-  //   match.role = selectedRole;
-  // }
 
   static async createMultiKillClip(
     multiKillMatch: MultiKillMatch,
     multiKill: MultiKill,
   ) {
+    EventService.publish('clipProgress', 'Initializing replay download...');
     const highlightsFolderPath = await LeagueClient.getHighlightsFolderPath();
     const replay = new Replay();
-    // await LeagueClient.enableWindowMode(); // still needed ?
     await LeagueClient.launchReplay(multiKillMatch.matchId);
     await replay.load(10, 10); // Add global vars
     await replay.init();

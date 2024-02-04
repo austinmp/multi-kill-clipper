@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 
 import Button from '@mui/material/Button';
-
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -18,15 +17,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import InputAdornment from '@mui/material/InputAdornment';
 import { MULTI_KILL_MENU_OPTION_TO_MULTI_KILL_TYPE } from './constants';
 import styles from './multi-kill-clipper.module.css';
-// import MultiKillClipper from '../main/app/controllers/multi-kill-clipper';
 import { FormData, FormErrors, HandleFormSubmitType } from './types';
-import LoadingStatus from './common/LoadingStatus';
 
 // Define the shape of the form data
 const ITEM_HEIGHT = 48;
@@ -96,6 +91,7 @@ export default function SummonerSearchForm({
         variant="outlined"
         disabled
         defaultValue="NA"
+        sx={{ width: '150px' }}
       />
       <TextField
         id="outlined-basic"
@@ -118,6 +114,7 @@ export default function SummonerSearchForm({
         disabled={isLoading}
         required
         error={!formData.tagline}
+        sx={{ width: '150px' }}
         InputProps={{
           startAdornment: <InputAdornment position="start">#</InputAdornment>,
         }}
@@ -152,7 +149,6 @@ export default function SummonerSearchForm({
       <Button
         variant="contained"
         color="success"
-        size="large"
         onClick={handleFormSubmit}
         disabled={isFormFieldMissing}
       >
