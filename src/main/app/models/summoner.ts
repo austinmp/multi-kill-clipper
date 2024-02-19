@@ -14,7 +14,7 @@ class Summoner {
   constructor(summonerName: string, tagline: string, puuid: string = '') {
     this.summonerName = summonerName;
     this.tagline = tagline;
-    this.riotId = `${summonerName}#${tagline}`;
+    this.riotId = `${encodeURIComponent(summonerName)}#${tagline}`;
     this.puuid = puuid;
     this.data = null;
   }
