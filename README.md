@@ -45,4 +45,7 @@ https://user-images.githubusercontent.com/48191538/119200669-61c4a680-ba5b-11eb-
 * Configurable replay settings (fps, resolution, format, etc.).
 * Tracking of previously clipped multi-kills to prevent duplicate searches.
 
-If you have any requests of your own, please feel free to submit them. 
+## Feedback & Support
+* [Submit a Bug Report](https://github.com/austinmp/multi-kill-clipper/issues/new/choose)
+* [Submit a Question](https://github.com/austinmp/multi-kill-clipper/discussions/categories/general)
+* [Submit a Feature Request](https://github.com/austinmp/multi-kill-clipper/discussions/categories/ideas)
