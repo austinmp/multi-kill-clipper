@@ -1,6 +1,6 @@
 import Paper from '@mui/material/Paper';
 import styles from './multi-kill-clipper.module.css';
-import gwen from '../../assets/gwen.png';
+import gwen from '../../assets/icon.png';
 import LoggedInSummoner from './SummonerStatus';
 import Summoner from '../main/app/models/summoner';
 import RefreshButton from './common/RefreshButton';

@@ -6,7 +6,6 @@ export interface FormData {
   selectedKillTypes: string[];
 }
 
-// Define the shape of the errors object
 export interface FormErrors {
   summonerName: boolean;
   tagline: boolean;
@@ -16,7 +15,6 @@ export interface FormErrors {
 export type HandleFormSubmitType = (
   event: React.FormEvent<HTMLFormElement>,
 ) => Promise<void>;
-
 
 export type LoadingStatusType = {
   isLoading: boolean;

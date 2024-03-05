@@ -180,8 +180,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "Multi Kill Clipper",
+    "appId": "com.multikillclipper.app",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -221,6 +221,10 @@
     "win": {
       "target": [
         "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "publish": [
+        "github"
       ]
     },
     "linux": {
