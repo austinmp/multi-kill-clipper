@@ -13,7 +13,6 @@
 * Select the types of multi-kills you would like Multi-Kill Clipper to detect (first blood, double, triple, quadra, or penta kills).
 * Multi-Kill Clipper will automatically download, launch, and record the entire kill sequence using the Replay API, saving the video to your League of Legends Highlights folder.
 
-![previewImage](https://user-images.githubusercontent.com/48191538/119243711-5e9ee880-bb37-11eb-9814-242a52a8ca9e.JPG)
 ![previewImage](https://github.com/austinmp/multi-kill-clipper/assets/48191538/10a0ff6a-8b46-483f-8d2f-b11a781ff14b)
 
 ## Prerequisites
