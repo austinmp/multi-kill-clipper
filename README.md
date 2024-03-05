@@ -2,8 +2,8 @@
   <a href="https://austinmp.github.io/multi-kill-clipper/">
     <img align="center" src="https://user-images.githubusercontent.com/48191538/120049047-ce551d80-bfe6-11eb-9795-6e2722aa0e7a.png"       height="120">
   </a>
-  <h3 align="center">Multi-Kill Clipper</h3>
-  <p align="center" width="50%">A desktop app for League of Legends players built on Electron. </p>
+  <h3 align="center">Multi Kill Clipper</h3>
+  <p align="center" width="50%">A League of Legends companion app built on Electron. </p>
 </p>
 
 ## About
@@ -14,6 +14,7 @@
 * Multi-Kill Clipper will automatically download, launch, and record the entire kill sequence using the Replay API, saving the video to your League of Legends Highlights folder.
 
 ![previewImage](https://user-images.githubusercontent.com/48191538/119243711-5e9ee880-bb37-11eb-9814-242a52a8ca9e.JPG)
+![previewImage](https://github.com/austinmp/multi-kill-clipper/assets/48191538/10a0ff6a-8b46-483f-8d2f-b11a781ff14b)
 
 ## Prerequisites
 * You must have the League of Legends client installed on your computer and running while using the app.
@@ -36,14 +37,13 @@
     >       You will need to restart the replay after changing this value for it to take effect.
     
 ## Download
-* [Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/tag/v1.0)
-* [Zip (All Platforms)](https://github.com/austinmp/multi-kill-clipper/releases/tag/v1.0-zip)
+* [Windows x64](https://github.com/austinmp/multi-kill-clipper/releases/download/v2.0/Multi.Kill.Clipper.exe)
+
 ## Demo
 https://user-images.githubusercontent.com/48191538/119200669-61c4a680-ba5b-11eb-9e10-6a5106f9ec76.mp4
 ## Planned Features
 * A queue system for clipping more than one multi-kill at a time.
 * Configurable replay settings (fps, resolution, format, etc.).
-* Built in file browser for viewing clips.
 * Tracking of previously clipped multi-kills to prevent duplicate searches.
 
 If you have any requests of your own, please feel free to submit them. 
